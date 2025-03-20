@@ -1,0 +1,69 @@
+import 'package:flutter/material.dart';
+import 'package:startify/widgets/idea_card_widget.dart';
+
+class InvestmentsPage extends StatelessWidget {
+  const InvestmentsPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SingleChildScrollView(
+        physics: ClampingScrollPhysics(),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 15),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Column(
+                    children: [
+                      Text('Invested Money'),
+                      SizedBox(height: 15),
+                      Container(
+                        height: 60,
+                        width: 160,
+                        decoration: BoxDecoration(
+                          color:
+                              Theme.of(context).colorScheme.secondaryContainer,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Center(child: Text('1000 \$')),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Text('Received Money'),
+                      SizedBox(height: 15),
+                      Container(
+                        height: 60,
+                        width: 160,
+                        decoration: BoxDecoration(
+                          color:
+                              Theme.of(context).colorScheme.secondaryContainer,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Center(child: Text('3000 \$')),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              ListView(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                children: [
+                  IdeaCardWidget(),
+                  IdeaCardWidget(),
+                  IdeaCardWidget(),
+                  IdeaCardWidget(),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
