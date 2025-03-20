@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:startify/data/notifiers.dart';
 import 'package:startify/widgets/idea_card_widget.dart';
+import 'package:startify/widgets/person_card_widget.dart';
 import 'package:startify/widgets/search_bar_widget.dart';
 
 class HomePage extends StatelessWidget {
@@ -13,15 +15,28 @@ class HomePage extends StatelessWidget {
         child: Column(
           children: [
             SearchBarWidget(),
-            ListView(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              children: [
-                IdeaCardWidget(),
-                IdeaCardWidget(),
-                IdeaCardWidget(),
-                IdeaCardWidget(),
-              ],
+            ValueListenableBuilder(
+              valueListenable: ideaSearchNotifier,
+              builder: (context, ideaSearch, child) {
+                return ListView(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  children:
+                      ideaSearch
+                          ? [
+                            IdeaCardWidget(),
+                            IdeaCardWidget(),
+                            IdeaCardWidget(),
+                            IdeaCardWidget(),
+                          ]
+                          : [
+                            PersonCardWidget(),
+                            PersonCardWidget(),
+                            PersonCardWidget(),
+                            PersonCardWidget(),
+                          ],
+                );
+              },
             ),
           ],
         ),
