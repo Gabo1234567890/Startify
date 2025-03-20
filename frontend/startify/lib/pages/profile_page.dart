@@ -8,7 +8,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class ProfilePageState extends State<ProfilePage> {
-  bool _isPasswordVisible = false; // Controls password visibility
+  bool _isPasswordVisible = false; //* Controls password visibility
 
   @override
   Widget build(BuildContext context) {
@@ -18,42 +18,62 @@ class ProfilePageState extends State<ProfilePage> {
         child: Column(
           children: [
             Center(
-              child: CircleAvatar(
-                radius: 100, // Adjust size
-                backgroundImage: AssetImage(
-                  "lib/assets/avatar2.png", //! Get from backend via REST
-                ),
+              child: Stack(
+                children: [
+                  CircleAvatar(
+                    radius: 100,
+                    backgroundImage: AssetImage(
+                      "lib/assets/avatar2.png", //! Get from backend via REST
+                    ),
+                  ),
+
+                  //* Edit Profile Picture Button
+                  Positioned(
+                    bottom: 5,
+                    left: 5,
+                    child: CircleAvatar(
+                      radius: 25,
+                      backgroundColor: Colors.white,
+                      child: IconButton(
+                        icon: Icon(Icons.edit, color: Colors.black),
+                        onPressed: () {
+                          //! Handle profile picture change
+                        },
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-            SizedBox(height: 26), //! Spacing
-            Text(
+            const SizedBox(height: 26), 
+            const Text(
               "Text1",
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
                 //! Handle account change logic
               },
               style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
               ),
-              child: Text("Change Account", style: TextStyle(fontSize: 16)),
+              child: const Text("Change Account", style: TextStyle(fontSize: 16)),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             _buildTitle(context, "About Me"),
             _buildField(
               "This is a short bio. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             _buildTitle(context, "Email"),
             _buildField("user@example.com"),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             _buildTitle(context, "Password"),
-            _buildPasswordField("Passss"), // Hidden password with bullets
+            _buildPasswordField("Passss"),
           ],
         ),
       ),
@@ -63,10 +83,9 @@ class ProfilePageState extends State<ProfilePage> {
   Widget _buildTitle(BuildContext context, String title) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: 0, vertical: 1),
+      padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 1),
       decoration: BoxDecoration(
-        color:
-            Theme.of(context).colorScheme.primaryContainer, // Adapts to theme
+        color: Theme.of(context).colorScheme.primaryContainer,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -99,7 +118,7 @@ class ProfilePageState extends State<ProfilePage> {
   Widget _buildField(String value) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.symmetric(vertical: 12, horizontal: 15),
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
       child: Text(
         value,
         style: TextStyle(fontSize: 16, color: Colors.grey[700]),
@@ -110,7 +129,7 @@ class ProfilePageState extends State<ProfilePage> {
   Widget _buildPasswordField(String password) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.only(left: 15),
+      padding: const EdgeInsets.only(left: 15),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
