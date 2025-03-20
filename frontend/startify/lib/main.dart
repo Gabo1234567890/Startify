@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             brightness: darkMode ? Brightness.dark : Brightness.light,
           ),
+          
         );
       },
     );
