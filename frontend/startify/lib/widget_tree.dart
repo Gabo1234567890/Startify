@@ -5,7 +5,7 @@ import 'package:startify/pages/profile_page.dart';
 import 'package:startify/widgets/app_bar_widget.dart';
 import 'package:startify/widgets/nav_bar_widget.dart';
 
-List<Widget> pages = [HomePage(), ProfilePage() ];
+List<Widget> pages = [HomePage(), ProfilePage()];
 
 class WidgetTree extends StatelessWidget {
   const WidgetTree({super.key});

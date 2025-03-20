@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
+
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  ProfilePageState createState() => ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class ProfilePageState extends State<ProfilePage> {
   bool _isPasswordVisible = false; // Controls password visibility
 
   @override
@@ -43,7 +45,9 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             SizedBox(height: 16),
             _buildTitle(context, "About Me"),
-            _buildField("This is a short bio. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."),
+            _buildField(
+              "This is a short bio. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            ),
             SizedBox(height: 10),
             _buildTitle(context, "Email"),
             _buildField("user@example.com"),
@@ -61,7 +65,8 @@ class _ProfilePageState extends State<ProfilePage> {
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 0, vertical: 1),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primaryContainer, // Adapts to theme
+        color:
+            Theme.of(context).colorScheme.primaryContainer, // Adapts to theme
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -78,7 +83,10 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ),
           IconButton(
-            icon: Icon(Icons.edit, color: Theme.of(context).colorScheme.secondary),
+            icon: Icon(
+              Icons.edit,
+              color: Theme.of(context).colorScheme.secondary,
+            ),
             onPressed: () {
               //! Handle edit action
             },
@@ -91,7 +99,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget _buildField(String value) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.symmetric(vertical: 12,  horizontal: 15),
+      padding: EdgeInsets.symmetric(vertical: 12, horizontal: 15),
       child: Text(
         value,
         style: TextStyle(fontSize: 16, color: Colors.grey[700]),

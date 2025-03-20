@@ -19,7 +19,12 @@ class IdeaPreviewWidget extends StatelessWidget {
           ),
           child: GridView.count(
             crossAxisCount: 2,
-            children: [Text('Idea name'), Text('Status')],
+            children: [
+              Text('Idea name'),
+              Text('Status'),
+              Image.asset('lib/assets/avatar2.png'),
+              Text('Description....................................'),
+            ],
           ),
         ),
       ),
