@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:startify/pages/home_page.dart';
+import 'package:startify/data/notifiers.dart';
+import 'package:startify/widget_tree.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,6 +11,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: HomePage());
+    return ValueListenableBuilder(
+      valueListenable: darkModeNotifier,
+      builder: (context, darkMode, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: WidgetTree(),
+          theme: ThemeData(
+            brightness: darkMode ? Brightness.dark : Brightness.light,
+          ),
+        );
+      },
+    );
   }
 }
