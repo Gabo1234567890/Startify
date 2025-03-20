@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    restart: always
+    container_name: my_postgres_db
+    environment:
+      POSTGRES_DB: Startify_DB
+      POSTGRES_USER: Admin
+      POSTGRES_PASSWORD: Admin_Pass3
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

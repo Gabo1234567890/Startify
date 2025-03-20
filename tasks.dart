@@ -8,6 +8,4 @@
 // TODO RestAPI
 
 //* Backend Tasks
-// TODO Database
-// TODO Login Auth
 // TODO 
