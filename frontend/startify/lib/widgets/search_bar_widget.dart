@@ -7,7 +7,7 @@ class SearchBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 10),
+      padding: const EdgeInsets.symmetric(vertical: 10),
       child: ValueListenableBuilder(
         valueListenable: ideaSearchNotifier,
         builder: (context, ideaSearch, child) {
