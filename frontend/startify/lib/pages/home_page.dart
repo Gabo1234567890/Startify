@@ -15,7 +15,6 @@ class HomePage extends StatelessWidget {
             SearchBarWidget(),
             ListView(
               shrinkWrap: true,
-              controller: ScrollController(),
               physics: NeverScrollableScrollPhysics(),
               children: [
                 IdeaCardWidget(),
