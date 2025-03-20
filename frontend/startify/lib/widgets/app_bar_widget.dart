@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:startify/data/notifiers.dart';
+import 'package:startify/pages/login_page.dart';
 
 class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   const AppBarWidget({super.key});
@@ -9,7 +10,15 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       leading: Padding(
         padding: const EdgeInsets.only(left: 15.0),
-        child: Center(child: Text('Log In')),
+        child: GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => LoginPage()),
+            );
+          },
+          child: Center(child: Text('Log In'))
+        ),
       ),
       title: Text('Startify', style: TextStyle(fontWeight: FontWeight.bold)),
       centerTitle: true,
