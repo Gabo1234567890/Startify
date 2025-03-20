@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:startify/data/notifiers.dart';
-import 'package:startify/pages/home_page.dart';
 import 'package:startify/widget_tree.dart';
 
 class AppBarWidgetNoLogIn extends StatelessWidget implements PreferredSizeWidget {
