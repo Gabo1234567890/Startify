@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'channels',
     'chat',
+    'corsheaders',
 ]
 
 ASGI_APPLICATION = "project.asgi.application"
@@ -65,7 +66,17 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'examplehost'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'example@gmail.com'
+EMAIL_HOST_PASSWORD = 'examplepassword'
 
 ROOT_URLCONF = 'startify.urls'
 
