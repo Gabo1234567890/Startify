@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:startify/widgets/person_card_widget.dart';
 import 'package:startify/widgets/plus_button_widget.dart';
+import 'package:startify/widgets/edit_button_widget.dart';
 
 class MyStartupPage extends StatelessWidget {
   const MyStartupPage({super.key});
@@ -27,6 +29,9 @@ class MyStartupPage extends StatelessWidget {
                     ),
                     textAlign: TextAlign.left,
                   ),
+                ),
+                SizedBox(
+                  width: 175,
                 ),
                 PlusButton(),
               ],
@@ -91,6 +96,10 @@ class MyStartupPage extends StatelessWidget {
                         textAlign: TextAlign.left,
                       ),
                     ),
+                    SizedBox(
+                      width: 175,
+                    ),
+                    EditButtonWidget(),
                   ],
                 ),
                 Text(
@@ -111,8 +120,49 @@ class MyStartupPage extends StatelessWidget {
                         ),
                         textAlign: TextAlign.left,
                       ),
-                    )
+                    ),
+                    SizedBox(
+                      width: 175,
+                    ),
+                    PlusButton(),
                   ],
+                ),
+                PersonCardWidget(),
+                PersonCardWidget(),
+                PersonCardWidget(),
+              ],
+            ),
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Text(
+                    'DOCUMENTS',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                Row(
+                  children: [
+                    Text(
+                      "1. Document's name",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Icon(Icons.circle_outlined),
+                  ],
+                ),
+                Container(
+                  width: 140,
+                  height: 200,
+                  decoration: BoxDecoration(
+                    border: Border(),
+                  ),
                 )
               ],
             )
