@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:startify/widgets/idea_card_widget.dart';
+import 'package:startify/widgets/plus_button_widget.dart';
 
 class MyStartupsPage extends StatelessWidget {
   const MyStartupsPage({super.key});
@@ -17,13 +18,21 @@ class MyStartupsPage extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 25.0),
-                child: Text(
-                  'Startups: 4',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.left,
+                child: Row(
+                  children: [
+                    Text(
+                      'Startups: 4',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.left,
+                    ),
+                    SizedBox(
+                      width: 175,
+                    ),
+                    PlusButton(),
+                  ],
                 ),
               ),
               Padding(
