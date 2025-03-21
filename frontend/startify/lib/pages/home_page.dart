@@ -16,25 +16,35 @@ class HomePage extends StatelessWidget {
           children: [
             SearchBarWidget(),
             ValueListenableBuilder(
-              valueListenable: ideaSearchNotifier,
-              builder: (context, ideaSearch, child) {
-                return ListView(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  children:
-                      ideaSearch
-                          ? [
-                            IdeaCardWidget(),
-                            IdeaCardWidget(),
-                            IdeaCardWidget(),
-                            IdeaCardWidget(),
-                          ]
-                          : [
-                            PersonCardWidget(),
-                            PersonCardWidget(),
-                            PersonCardWidget(),
-                            PersonCardWidget(),
-                          ],
+              valueListenable: myIdeaNotifier,
+              builder: (context, myIdea, child) {
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  if (myIdeaNotifier.value) {
+                    myIdeaNotifier.value = false;
+                  }
+                });
+                return ValueListenableBuilder(
+                  valueListenable: ideaSearchNotifier,
+                  builder: (context, ideaSearch, child) {
+                    return ListView(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      children:
+                          ideaSearch
+                              ? [
+                                IdeaCardWidget(),
+                                IdeaCardWidget(),
+                                IdeaCardWidget(),
+                                IdeaCardWidget(),
+                              ]
+                              : [
+                                PersonCardWidget(),
+                                PersonCardWidget(),
+                                PersonCardWidget(),
+                                PersonCardWidget(),
+                              ],
+                    );
+                  },
                 );
               },
             ),

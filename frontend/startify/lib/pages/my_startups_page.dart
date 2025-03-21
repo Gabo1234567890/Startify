@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:startify/data/notifiers.dart';
 import 'package:startify/widgets/idea_card_widget.dart';
 import 'package:startify/widgets/plus_button_widget.dart';
 
@@ -28,43 +29,52 @@ class MyStartupsPage extends StatelessWidget {
                       ),
                       textAlign: TextAlign.left,
                     ),
-                    SizedBox(
-                      width: 175,
-                    ),
+                    SizedBox(width: 175),
                     PlusButton(),
                   ],
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        left: 20.0, right: 20.0, top: 5.0),
-                    child: SizedBox(
-                      height: 45,
-                      child: TextField(
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30.0),
-                          ),
-                          hintText: 'Search Startups...',
-                          contentPadding: EdgeInsets.all(10),
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    left: 20.0,
+                    right: 20.0,
+                    top: 5.0,
+                  ),
+                  child: SizedBox(
+                    height: 45,
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0),
                         ),
+                        hintText: 'Search Startups...',
+                        contentPadding: EdgeInsets.all(10),
                       ),
                     ),
                   ),
                 ),
               ),
-              ListView(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                children: [
-                  IdeaCardWidget(),
-                  IdeaCardWidget(),
-                  IdeaCardWidget(),
-                  IdeaCardWidget(),
-                ],
+              ValueListenableBuilder(
+                valueListenable: myIdeaNotifier,
+                builder: (context, myIdea, child) {
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    if (!myIdeaNotifier.value) {
+                      myIdeaNotifier.value = true;
+                    }
+                  });
+                  return ListView(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    children: [
+                      IdeaCardWidget(),
+                      IdeaCardWidget(),
+                      IdeaCardWidget(),
+                      IdeaCardWidget(),
+                    ],
+                  );
+                },
               ),
             ],
           ),

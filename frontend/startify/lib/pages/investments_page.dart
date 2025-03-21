@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:startify/data/notifiers.dart';
 import 'package:startify/widgets/idea_card_widget.dart';
 
 class InvestmentsPage extends StatelessWidget {
@@ -62,15 +63,25 @@ class InvestmentsPage extends StatelessWidget {
                   ),
                 ],
               ),
-              ListView(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                children: [
-                  IdeaCardWidget(),
-                  IdeaCardWidget(),
-                  IdeaCardWidget(),
-                  IdeaCardWidget(),
-                ],
+              ValueListenableBuilder(
+                valueListenable: myIdeaNotifier,
+                builder: (context, myIdea, child) {
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    if (myIdeaNotifier.value) {
+                      myIdeaNotifier.value = false;
+                    }
+                  });
+                  return ListView(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    children: [
+                      IdeaCardWidget(),
+                      IdeaCardWidget(),
+                      IdeaCardWidget(),
+                      IdeaCardWidget(),
+                    ],
+                  );
+                },
               ),
             ],
           ),
