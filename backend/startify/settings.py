@@ -9,11 +9,11 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
@@ -39,13 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'channels',
-    'chat',
-    'login',
-    'event_meet',
-    'search',
-    'idea_handling',
+    'startify.apps.chat',
+    'startify.apps.login',
+    'startify.apps.event_meet',
+    'startify.apps.search',
+    'startify.apps.idea_handling',
     'corsheaders',
-    'rest_framework',
     'rest_framework.authtoken',
 ]
 
@@ -116,11 +115,11 @@ WSGI_APPLICATION = 'startify.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Startify_DB',
-        'USER': 'Admin',
+        'NAME': 'startify_db',
+        'USER': 'admin',
         'PASSWORD': 'Admin_Pass3',
         'HOST': 'localhost',  # The name of the Docker service
-        'PORT': '5433',
+        'PORT': '5432',
     }
 }
 

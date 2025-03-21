@@ -1,7 +1,7 @@
 from django.db.models import Q
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from startify.models import Project, Entrepreneur
+from startify.apps.search.models import Project, Entrepreneur
 
 @api_view(['GET'])
 def search_projects(request):
