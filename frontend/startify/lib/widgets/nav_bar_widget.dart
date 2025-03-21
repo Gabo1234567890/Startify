@@ -20,38 +20,33 @@ class NavBarWidget extends StatelessWidget {
           child: NavigationBar(
             destinations: [
               NavigationDestination(
-                icon:
-                    whereIsHome[0]
-                        ? Icon(Icons.home_outlined)
-                        : Icon(Icons.chat_outlined),
+                icon: whereIsHome[0]
+                    ? Icon(Icons.home_outlined)
+                    : Icon(Icons.chat_outlined),
                 label: '',
               ),
               NavigationDestination(
-                icon:
-                    whereIsHome[1]
-                        ? Icon(Icons.home_outlined)
-                        : Icon(Icons.attach_money),
+                icon: whereIsHome[1]
+                    ? Icon(Icons.home_outlined)
+                    : Icon(Icons.attach_money),
                 label: '',
               ),
               NavigationDestination(
-                icon:
-                    whereIsHome[2]
-                        ? Icon(Icons.home_outlined)
-                        : Icon(Icons.calendar_month_outlined),
+                icon: whereIsHome[2]
+                    ? Icon(Icons.home_outlined)
+                    : Icon(Icons.calendar_month_outlined),
                 label: '',
               ),
               NavigationDestination(
-                icon:
-                    whereIsHome[3]
-                        ? Icon(Icons.home_outlined)
-                        : Icon(Icons.lightbulb_outline),
+                icon: whereIsHome[3]
+                    ? Icon(Icons.home_outlined)
+                    : Icon(Icons.lightbulb_outline),
                 label: '',
               ),
               NavigationDestination(
-                icon:
-                    whereIsHome[4]
-                        ? Icon(Icons.home_outlined)
-                        : Icon(Icons.person_outline),
+                icon: whereIsHome[4]
+                    ? Icon(Icons.home_outlined)
+                    : Icon(Icons.person_outline),
                 label: '',
               ),
             ],
