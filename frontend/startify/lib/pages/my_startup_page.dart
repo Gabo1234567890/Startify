@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:startify/widgets/app_bar_widget.dart';
 import 'package:startify/widgets/app_bar_widget_nologin.dart';
-import 'package:startify/widgets/person_card_widget.dart';
 import 'package:startify/widgets/plus_button_widget.dart';
 import 'package:startify/widgets/edit_button_widget.dart';
 
@@ -15,7 +13,7 @@ class MyStartupPage extends StatelessWidget {
       body: SingleChildScrollView(
         physics: ClampingScrollPhysics(),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 4.9),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,11 +22,7 @@ class MyStartupPage extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(
-                      left: 8,
-                      right: 8,
-                      top: 8,
-                      bottom: 20,
-                    ),
+                        left: 8, right: 8, top: 8, bottom: 0),
                     child: Text(
                       "STARTUP'S NAME",
                       style: TextStyle(
@@ -38,12 +32,29 @@ class MyStartupPage extends StatelessWidget {
                       textAlign: TextAlign.left,
                     ),
                   ),
-                  SizedBox(width: 100),
+                  SizedBox(
+                    width: 100,
+                  ),
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
+                    padding: const EdgeInsets.only(bottom: 0),
                     child: PlusButton(),
                   ),
                 ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10.0),
+                child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.black,
+                    ),
+                    child: Text(
+                      "300\$ / 600\$",
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )),
               ),
               Column(
                 children: [
@@ -57,11 +68,11 @@ class MyStartupPage extends StatelessWidget {
                           height: 165,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: Colors.black, width: 1),
+                            border: Border.all(
+                                color: Theme.of(context).splashColor, width: 3),
                             image: DecorationImage(
-                              image: AssetImage(
-                                'lib/assets/idea_placeholder.png',
-                              ),
+                              image:
+                                  AssetImage('lib/assets/idea_placeholder.png'),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -74,11 +85,11 @@ class MyStartupPage extends StatelessWidget {
                           height: 165,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: Colors.black, width: 1),
+                            border: Border.all(
+                                color: Theme.of(context).splashColor, width: 3),
                             image: DecorationImage(
-                              image: AssetImage(
-                                'lib/assets/idea_placeholder.png',
-                              ),
+                              image:
+                                  AssetImage('lib/assets/idea_placeholder.png'),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -96,11 +107,11 @@ class MyStartupPage extends StatelessWidget {
                           height: 165,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: Colors.black, width: 1),
+                            border: Border.all(
+                                color: Theme.of(context).splashColor, width: 3),
                             image: DecorationImage(
-                              image: AssetImage(
-                                'lib/assets/idea_placeholder.png',
-                              ),
+                              image:
+                                  AssetImage('lib/assets/idea_placeholder.png'),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -143,63 +154,221 @@ class MyStartupPage extends StatelessWidget {
                   ],
                 ),
               ),
-              Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 15.0),
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Text(
-                            'TEAM',
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: Text(
+                        'DOCUMENTS',
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 5.0),
+                      child: Row(
+                        children: [
+                          Text(
+                            "1. Document's name",
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
-                            textAlign: TextAlign.left,
                           ),
-                        ),
-                        SizedBox(width: 225),
-                        PlusButton(),
-                      ],
-                    ),
-                  ),
-                  PersonCardWidget(),
-                  PersonCardWidget(),
-                  PersonCardWidget(),
-                ],
-              ),
-              Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Text(
-                      'DOCUMENTS',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
+                          SizedBox(
+                            width: 160,
+                          ),
+                          Icon(Icons.circle_outlined),
+                        ],
                       ),
                     ),
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        "1. Document's name",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  width: 140,
+                                  height: 200,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(
+                                        color: Theme.of(context).splashColor,
+                                        width: 3),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  width: 140,
+                                  height: 200,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(
+                                        color: Theme.of(context).splashColor,
+                                        width: 3),
+                                  ),
+                                  child: ElevatedButton(
+                                    onPressed: () {},
+                                    style: ElevatedButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                10))), // Rounded corners),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.add,
+                                          size: 50,
+                                        ),
+                                        Text(
+                                          'Add your document.',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0, top: 8),
+                            child: Text(
+                              'More information',
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0, top: 4),
+                            child: Text(
+                              'This document is...',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      Icon(Icons.circle_outlined),
-                    ],
-                  ),
-                  Container(
-                    width: 140,
-                    height: 200,
-                    decoration: BoxDecoration(border: Border()),
-                  ),
-                ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 5.0),
+                      child: Row(
+                        children: [
+                          Text(
+                            "2. Document's name",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 160,
+                          ),
+                          Icon(Icons.circle_outlined),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  width: 140,
+                                  height: 200,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(
+                                        color: Theme.of(context).splashColor,
+                                        width: 3),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  width: 140,
+                                  height: 200,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(
+                                        color: Theme.of(context).splashColor,
+                                        width: 3),
+                                  ),
+                                  child: ElevatedButton(
+                                    onPressed: () {},
+                                    style: ElevatedButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                10))), // Rounded corners),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.add,
+                                          size: 50,
+                                        ),
+                                        Text(
+                                          'Add your document.',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0, top: 8),
+                            child: Text(
+                              'More information',
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0, top: 4),
+                            child: Text(
+                              'This document is...',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
