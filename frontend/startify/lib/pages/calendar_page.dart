@@ -344,11 +344,9 @@ class CalendarPageState extends State<CalendarPage> {
   Widget _buildMonthlyView() {
     DateTime firstDayOfMonth = DateTime(_currentDate.year, _currentDate.month, 1);
     int daysInMonth = DateTime(_currentDate.year, _currentDate.month + 1, 0).day;
-    List<DateTime> monthDays = List.generate(daysInMonth, (index) => firstDayOfMonth.add(Duration(days: index)));
-    
+
     DateTime firstDisplayedDay = firstDayOfMonth.subtract(Duration(days: firstDayOfMonth.weekday - 1));
-    int totalGridCells = ((daysInMonth + firstDisplayedDay.weekday - 1) / 7).ceil() * 7;
-    List<DateTime> calendarDays = List.generate(totalGridCells, (index) => firstDisplayedDay.add(Duration(days: index)));
+    List<DateTime> calendarDays = List.generate(42, (index) => firstDisplayedDay.add(Duration(days: index)));
 
     DateTime selectedDay = DateTime(_currentDate.year, _currentDate.month, _currentDate.day);
     List<Map<String, dynamic>> selectedDayEvents = _events[selectedDay] ?? [];
@@ -397,6 +395,7 @@ class CalendarPageState extends State<CalendarPage> {
           child: Padding(
             padding: EdgeInsets.all(5),
             child: GridView.count(
+              childAspectRatio: 0.85,
               crossAxisCount: 7,
               children: calendarDays.map((day) {
                 DateTime dayKey = DateTime(day.year, day.month, day.day);
@@ -418,13 +417,15 @@ class CalendarPageState extends State<CalendarPage> {
                     decoration: BoxDecoration(
                       color: isSelected
                           ? Colors.black
-                          : (hasEvent ? Colors.deepPurple : Colors.grey[300]),
+                          : (hasEvent ? Colors.deepPurple : (isCurrentMonth ? Colors.grey[300] : Colors.grey[200])),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Center(
                       child: Text(
                         "${day.day}",
                         style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
                           color: isSelected || hasEvent
                               ? Colors.white
                               : isCurrentMonth
@@ -439,24 +440,6 @@ class CalendarPageState extends State<CalendarPage> {
             ),
           ),
         ),
-        // Padding(
-        //   padding: EdgeInsets.only(top: 30),
-        //   child: selectedDayEvents.isNotEmpty
-        //       ? Expanded(
-        //           child: ListView.builder(
-        //             itemCount: selectedDayEvents.length,
-        //             itemBuilder: (context, index) {
-        //               var event = selectedDayEvents[index];
-        //               return ListTile(
-        //                 title: Text(event["name"], style: TextStyle(color: Colors.white)),
-        //                 tileColor: Colors.deepPurple,
-        //               );
-        //             },
-        //           ),
-        //         )
-        //       : Center(
-        //           child: Text("No events", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))),
-        // ),
       ],
     );
   }
