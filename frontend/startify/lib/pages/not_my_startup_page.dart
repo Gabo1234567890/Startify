@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:startify/widgets/app_bar_widget_nologin.dart';
-import 'package:startify/widgets/nav_bar_old_widget.dart';
 import 'package:startify/widgets/person_card_widget.dart';
 import 'package:startify/widgets/plus_button_widget.dart';
 
@@ -15,7 +14,6 @@ class NotMyStartupPage extends StatelessWidget {
         physics: ClampingScrollPhysics(),
         child: Column(
           children: [
-            //const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 20),
               child: Column(
@@ -220,7 +218,6 @@ class NotMyStartupPage extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: NavBarWidget(),
     );
   }
 }
