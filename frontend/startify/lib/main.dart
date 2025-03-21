@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:startify/data/notifiers.dart';
-import 'package:startify/pages/foreign_investment.dart';
 import 'package:startify/widget_tree.dart';
 
 void main() {
