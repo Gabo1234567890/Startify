@@ -113,21 +113,6 @@ class CalendarPageState extends State<CalendarPage> {
   }
 
 
-  Widget _buildDeleteButton() {
-    return GestureDetector(
-      onTap: _selectedEvent != null ? _removeEvent : null,
-      child: Container(
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-        decoration: BoxDecoration(
-          color: _selectedEvent != null ? Colors.red : Colors.grey,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Text("Delete Event", style: TextStyle(color: Colors.white)),
-      ),
-    );
-  }
-
-
   Widget _buildTextInput(String hint, TextEditingController controller) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10),
@@ -355,11 +340,15 @@ class CalendarPageState extends State<CalendarPage> {
       ],
     );
   }
-
+  
   Widget _buildMonthlyView() {
     DateTime firstDayOfMonth = DateTime(_currentDate.year, _currentDate.month, 1);
     int daysInMonth = DateTime(_currentDate.year, _currentDate.month + 1, 0).day;
     List<DateTime> monthDays = List.generate(daysInMonth, (index) => firstDayOfMonth.add(Duration(days: index)));
+    
+    DateTime firstDisplayedDay = firstDayOfMonth.subtract(Duration(days: firstDayOfMonth.weekday - 1));
+    int totalGridCells = ((daysInMonth + firstDisplayedDay.weekday - 1) / 7).ceil() * 7;
+    List<DateTime> calendarDays = List.generate(totalGridCells, (index) => firstDisplayedDay.add(Duration(days: index)));
 
     DateTime selectedDay = DateTime(_currentDate.year, _currentDate.month, _currentDate.day);
     List<Map<String, dynamic>> selectedDayEvents = _events[selectedDay] ?? [];
@@ -389,55 +378,85 @@ class CalendarPageState extends State<CalendarPage> {
             ),
           ],
         ),
+        const SizedBox(height: 15),
+        Container(
+          padding: EdgeInsets.symmetric(vertical: 5),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+                .map((day) => Expanded(
+                      child: Center(
+                        child: Text(day, style: TextStyle(fontWeight: FontWeight.bold)),
+                      ),
+                    ))
+                .toList(),
+          ),
+        ),
+        const SizedBox(height: 15),
         Expanded(
-          child: GridView.count(
-            crossAxisCount: 7,
-            children: monthDays.map((day) {
-              DateTime dayKey = DateTime(day.year, day.month, day.day);
-              bool hasEvent = _events.keys.any((eventDay) =>
-                  eventDay.year == day.year &&
-                  eventDay.month == day.month &&
-                  eventDay.day == day.day);
-              bool isSelected = selectedDay == dayKey;
+          child: Padding(
+            padding: EdgeInsets.all(5),
+            child: GridView.count(
+              crossAxisCount: 7,
+              children: calendarDays.map((day) {
+                DateTime dayKey = DateTime(day.year, day.month, day.day);
+                bool hasEvent = _events.keys.any((eventDay) =>
+                    eventDay.year == day.year &&
+                    eventDay.month == day.month &&
+                    eventDay.day == day.day);
+                bool isSelected = selectedDay == dayKey;
+                bool isCurrentMonth = day.month == _currentDate.month;
 
-              return GestureDetector(
-                onTap: () {
-                  setState(() {
-                    _currentDate = dayKey;
-                  });
-                },
-                child: Container(
-                  margin: EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                    color: isSelected ? Colors.black : (hasEvent ? Colors.deepPurple : Colors.grey[300]),
-                    borderRadius: BorderRadius.circular(10),
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _currentDate = dayKey;
+                    });
+                  },
+                  child: Container(
+                    margin: EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: isSelected
+                          ? Colors.black
+                          : (hasEvent ? Colors.deepPurple : Colors.grey[300]),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "${day.day}",
+                        style: TextStyle(
+                          color: isSelected || hasEvent
+                              ? Colors.white
+                              : isCurrentMonth
+                                  ? Colors.black
+                                  : Colors.grey,
+                        ),
+                      ),
+                    ),
                   ),
-                  child: Center(
-                    child: Text("${day.day}",
-                        style: TextStyle(color: isSelected ? Colors.white : (hasEvent ? Colors.white : Colors.black))),
-                  ),
-                ),
-              );
-            }).toList(),
+                );
+              }).toList(),
+            ),
           ),
         ),
-        Padding(
-          padding: EdgeInsets.only(top: 30),
-          child: Expanded(
-            child: selectedDayEvents.isNotEmpty
-                ? ListView.builder(
-                    itemCount: selectedDayEvents.length,
-                    itemBuilder: (context, index) {
-                      var event = selectedDayEvents[index];
-                      return ListTile(
-                        title: Text(event["name"], style: TextStyle(color: Colors.white)),
-                        tileColor: Colors.deepPurple,
-                      );
-                    },
-                  )
-                : Center(child: Text("No events", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))),
-          ),
-        ),
+        // Padding(
+        //   padding: EdgeInsets.only(top: 30),
+        //   child: selectedDayEvents.isNotEmpty
+        //       ? Expanded(
+        //           child: ListView.builder(
+        //             itemCount: selectedDayEvents.length,
+        //             itemBuilder: (context, index) {
+        //               var event = selectedDayEvents[index];
+        //               return ListTile(
+        //                 title: Text(event["name"], style: TextStyle(color: Colors.white)),
+        //                 tileColor: Colors.deepPurple,
+        //               );
+        //             },
+        //           ),
+        //         )
+        //       : Center(
+        //           child: Text("No events", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))),
+        // ),
       ],
     );
   }
