@@ -17,7 +17,7 @@ class ContractsPage extends StatelessWidget {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 15.0),
+                  padding: const EdgeInsets.only(top: 15.0, left: 10),
                   child: Text(
                     'Contract',
                     style: TextStyle(
@@ -28,22 +28,9 @@ class ContractsPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 5),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Description:',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  '............................................................................................................................................................................................................................',
-                ),
-              ),
-              const SizedBox(height: 10),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -76,6 +63,27 @@ class ContractsPage extends StatelessWidget {
                           ],
                         ),
                       ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10.0, top: 10),
+                          child: Text(
+                            'Description:',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10.0, right: 10),
+                          child: Text(
+                            '............................................................................................................................................................................................................................',
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -85,32 +93,22 @@ class ContractsPage extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: const EdgeInsets.only(top: 15.0),
-                  child: Text(
-                    'Contract',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w900,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child: Text(
+                      'Contract',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w900,
+                      ),
                     ),
                   ),
                 ),
               ),
               const SizedBox(height: 5),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Description:',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  '............................................................................................................................................................................................................................',
-                ),
-              ),
-              const SizedBox(height: 10),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -143,6 +141,27 @@ class ContractsPage extends StatelessWidget {
                           ],
                         ),
                       ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10.0, top: 10),
+                          child: Text(
+                            'Description:',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10.0, right: 10),
+                          child: Text(
+                            '............................................................................................................................................................................................................................',
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
