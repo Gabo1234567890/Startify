@@ -84,25 +84,13 @@ class NotMyStartupPage extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 5),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            'Description:',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            '............................................................................................................................................................................................................................',
-                          ),
-                        ),
-                        const SizedBox(height: 10),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding:
+                                  const EdgeInsets.only(right: 8.0, top: 8),
                               child: Container(
                                 width: 140,
                                 height: 200,
@@ -132,6 +120,30 @@ class NotMyStartupPage extends StatelessWidget {
                                     ],
                                   ),
                                 ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 10.0, top: 10),
+                                    child: Text(
+                                      'Description:',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 10.0, right: 10),
+                                    child: Text(
+                                      '............................................................................................................................................................................................................................',
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
