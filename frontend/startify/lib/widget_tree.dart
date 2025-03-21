@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:startify/data/notifiers.dart';
 import 'package:startify/pages/calendar_page.dart';
+import 'package:startify/pages/chat_page.dart';
 import 'package:startify/pages/home_page.dart';
 import 'package:startify/pages/investments_page.dart';
 import 'package:startify/pages/my_startups_page.dart';
@@ -10,9 +11,10 @@ import 'package:startify/widgets/nav_bar_widget.dart';
 
 List<Widget> pages = [
   HomePage(),
+  ChatPage(),
   InvestmentsPage(),
-  MyStartupsPage(),
   CalendarPage(),
+  MyStartupsPage(),
   ProfilePage(),
 ];
 
