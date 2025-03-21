@@ -28,6 +28,7 @@ class MyStartupPage extends StatelessWidget {
                     textAlign: TextAlign.left,
                   ),
                 ),
+                PlusButton(),
               ],
             ),
             Column(
@@ -45,10 +46,57 @@ class MyStartupPage extends StatelessWidget {
                         ),
                       ),
                     ),
+                    Container(
+                      width: 100,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                          image: AssetImage('lib/assets/idea_placeholder.png'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Container(
+                      width: 100,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                          image: AssetImage('lib/assets/idea_placeholder.png'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ],
-            )
+            ),
+            Column(
+              children: [
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Text(
+                        "DESCRIPTION",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.left,
+                      ),
+                    ),
+                  ],
+                ),
+                Text(
+                    'Mobile application that connects enterpreneur and investitors.')
+              ],
+            ),
           ],
         ),
       ),
