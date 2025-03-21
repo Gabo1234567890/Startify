@@ -72,7 +72,7 @@ class ProfilePageState extends State<ProfilePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    width: 300,
+                    width: 350,
                     height: 40,
                     decoration: BoxDecoration(
                       color: Theme.of(context).splashColor,
@@ -92,7 +92,7 @@ class ProfilePageState extends State<ProfilePage> {
                           ),
                         ),
                         SizedBox(
-                          width: 135,
+                          width: 185,
                         ),
                         ElevatedButton(
                           onPressed: () {},
@@ -118,7 +118,7 @@ class ProfilePageState extends State<ProfilePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    width: 300,
+                    width: 350,
                     height: 40,
                     decoration: BoxDecoration(
                       color: Theme.of(context).splashColor,
@@ -138,7 +138,7 @@ class ProfilePageState extends State<ProfilePage> {
                           ),
                         ),
                         SizedBox(
-                          width: 168,
+                          width: 218,
                         ),
                         ElevatedButton(
                           onPressed: () {},
@@ -162,7 +162,7 @@ class ProfilePageState extends State<ProfilePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    width: 300,
+                    width: 350,
                     height: 40,
                     decoration: BoxDecoration(
                       color: Theme.of(context).splashColor,
@@ -182,7 +182,7 @@ class ProfilePageState extends State<ProfilePage> {
                           ),
                         ),
                         SizedBox(
-                          width: 134,
+                          width: 184,
                         ),
                         ElevatedButton(
                           onPressed: () {},
