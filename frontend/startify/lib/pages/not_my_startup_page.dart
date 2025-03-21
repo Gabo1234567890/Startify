@@ -2,14 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:startify/widgets/app_bar_widget_nologin.dart';
 import 'package:startify/widgets/nav_bar_old_widget.dart';
 
-class FInvestmentPage extends StatefulWidget {
-  const FInvestmentPage({super.key});
+class NotMyStartupPage extends StatelessWidget {
+  const NotMyStartupPage({super.key});
 
-  @override
-  State<FInvestmentPage> createState() => _FInvestmentPageState();
-}
-
-class _FInvestmentPageState extends State<FInvestmentPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
