@@ -8,6 +8,10 @@ from django.contrib.auth.tokens import default_token_generator
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
+from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password
+from .models import UserProfile 
+from .serializers import UserSerializer, UserProfileSerializer
 
 @api_view(['POST'])
 def register_user(request):
@@ -19,16 +23,14 @@ def register_user(request):
         username=data['username'],
         email=data['email'],
         password=make_password(data['password']),
-        is_active=False  # User must verify before login
+        is_active=False 
     )
 
-    # Generate verification token
     token = default_token_generator.make_token(user)
     uid = urlsafe_base64_encode(force_bytes(user.pk))
     domain = get_current_site(request).domain
     verification_link = f"http://{domain}/api/verify-email/{uid}/{token}/"
 
-    # Send verification email
     send_mail(
         "Verify Your Email",
         f"Click the link to verify your email: {verification_link}",
