@@ -6,15 +6,15 @@ class EditButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 70,
-      height: 35,
+      width: 32,
+      height: 32,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: Theme.of(context).splashColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 1),
         ),
         onPressed: () {},
         child: Center(
@@ -23,7 +23,7 @@ class EditButtonWidget extends StatelessWidget {
             children: [
               Icon(
                 Icons.edit,
-                size: 24,
+                size: 18,
                 color: Theme.of(context).iconTheme.color,
               ),
             ],
