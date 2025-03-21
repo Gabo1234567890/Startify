@@ -60,6 +60,7 @@ flutter:
   assets:
     - lib/assets/avatar2.png
     - lib/assets/idea_placeholder.png
+    - lib/assets/document_placeholder.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
