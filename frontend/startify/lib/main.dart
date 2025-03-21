@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:startify/data/notifiers.dart';
-import 'package:startify/pages/calendar_page.dart';
 import 'package:startify/widget_tree.dart';
 
 void main() {
@@ -21,7 +20,6 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             brightness: darkMode ? Brightness.dark : Brightness.light,
           ),
-          
         );
       },
     );

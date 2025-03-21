@@ -18,8 +18,14 @@ class InvestmentsPage extends StatelessWidget {
                 children: [
                   Column(
                     children: [
-                      Text('Invested Money'),
-                      SizedBox(height: 15),
+                      Text(
+                        'Invested Money',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 10),
                       Container(
                         height: 60,
                         width: 160,
@@ -34,8 +40,14 @@ class InvestmentsPage extends StatelessWidget {
                   ),
                   Column(
                     children: [
-                      Text('Received Money'),
-                      SizedBox(height: 15),
+                      Text(
+                        'Received Money',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 10),
                       Container(
                         height: 60,
                         width: 160,
