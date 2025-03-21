@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 class PlusButton extends StatelessWidget {
-  final VoidCallback? onPressed;
-
-  const PlusButton({Key? key, this.onPressed}) : super(key: key);
+  const PlusButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,12 +10,13 @@ class PlusButton extends StatelessWidget {
       height: 35,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
+          backgroundColor: Theme.of(context).splashColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 16),
         ),
-        onPressed: onPressed,
+        onPressed: () {},
         child: Center(
           child: Row(
             mainAxisSize: MainAxisSize.min,
