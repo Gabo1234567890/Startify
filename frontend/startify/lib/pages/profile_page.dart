@@ -65,10 +65,13 @@ class ProfilePageState extends State<ProfilePage> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
+                  foregroundColor: Theme.of(context).brightness == Brightness.dark 
+                    ? Colors.white 
+                    : Colors.black,
                 ),
                 child: const Text(
                   "Change Account",
-                  style: TextStyle(fontSize: 16, color: Colors.black),
+                  //style: TextStyle(fontSize: 16, color: Colors.black),
                 ),
               ),
               const SizedBox(height: 30),

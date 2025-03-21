@@ -40,7 +40,13 @@ INSTALLED_APPS = [
     'rest_framework',
     'channels',
     'chat',
+    'login',
+    'event_meet',
+    'search',
+    'idea_handling',
     'corsheaders',
+    'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 ASGI_APPLICATION = "project.asgi.application"
@@ -55,6 +61,11 @@ CHANNEL_LAYERS = {
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
     ),
 }
 
