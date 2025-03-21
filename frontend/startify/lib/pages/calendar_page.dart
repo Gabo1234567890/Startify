@@ -18,8 +18,8 @@ class CalendarPageState extends State<CalendarPage> {
   TimeOfDay _selectedTime = TimeOfDay(hour: 12, minute: 0);
   DateTime _selectedDate = DateTime.now();
 
-  Map<DateTime, List<Map<String, dynamic>>> _events = {};
-  Map<DateTime, Color> _dayColors = {};
+  final Map<DateTime, List<Map<String, dynamic>>> _events = {};
+  final Map<DateTime, Color> _dayColors = {};
   Map<String, dynamic>? _selectedEvent;
 
   final List<Color> _eventColors = [Colors.red, Colors.blue, Colors.green, Colors.orange];
@@ -343,13 +343,13 @@ class CalendarPageState extends State<CalendarPage> {
   
   Widget _buildMonthlyView() {
     DateTime firstDayOfMonth = DateTime(_currentDate.year, _currentDate.month, 1);
-    int daysInMonth = DateTime(_currentDate.year, _currentDate.month + 1, 0).day;
+    //int daysInMonth = DateTime(_currentDate.year, _currentDate.month + 1, 0).day;
 
     DateTime firstDisplayedDay = firstDayOfMonth.subtract(Duration(days: firstDayOfMonth.weekday - 1));
     List<DateTime> calendarDays = List.generate(42, (index) => firstDisplayedDay.add(Duration(days: index)));
 
     DateTime selectedDay = DateTime(_currentDate.year, _currentDate.month, _currentDate.day);
-    List<Map<String, dynamic>> selectedDayEvents = _events[selectedDay] ?? [];
+    //List<Map<String, dynamic>> selectedDayEvents = _events[selectedDay] ?? [];
 
     return Column(
       children: [
