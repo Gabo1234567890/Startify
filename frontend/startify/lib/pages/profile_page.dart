@@ -12,6 +12,15 @@ class ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    // Determine the current theme mode
+    final bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
+    // Define colors based on the theme mode
+    final Color containerColor =
+        isDarkMode ? Color(0xFF2D526C) : Color.fromRGBO(224, 253, 255, 1);
+    final Color textColor = isDarkMode ? Colors.white : Colors.black;
+    final Color iconColor = isDarkMode ? Colors.white : Colors.black;
+
     return Scaffold(
       body: SingleChildScrollView(
         physics: ClampingScrollPhysics(),
@@ -35,9 +44,9 @@ class ProfilePageState extends State<ProfilePage> {
                       left: 5,
                       child: CircleAvatar(
                         radius: 25,
-                        backgroundColor: Colors.white,
+                        backgroundColor: containerColor,
                         child: IconButton(
-                          icon: Icon(Icons.edit, color: Colors.black),
+                          icon: Icon(Icons.edit, color: iconColor),
                           onPressed: () {
                             //! Handle profile picture change
                           },
@@ -48,9 +57,13 @@ class ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               const SizedBox(height: 26),
-              const Text(
+              Text(
                 "Name",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: textColor,
+                ),
               ),
               const SizedBox(height: 16),
               ElevatedButton(
@@ -65,13 +78,11 @@ class ProfilePageState extends State<ProfilePage> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
-                  foregroundColor: Theme.of(context).brightness == Brightness.dark 
-                    ? Colors.white 
-                    : Colors.black,
+                  foregroundColor: textColor,
+                  backgroundColor: containerColor,
                 ),
                 child: const Text(
                   "Change Account",
-                  //style: TextStyle(fontSize: 16, color: Colors.black),
                 ),
               ),
               const SizedBox(height: 30),
@@ -82,7 +93,7 @@ class ProfilePageState extends State<ProfilePage> {
                     width: 350,
                     height: 40,
                     decoration: BoxDecoration(
-                      color: Theme.of(context).splashColor,
+                      color: containerColor,
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(20), // Round top-right
                         bottomRight: Radius.circular(20), // Round bottom-right
@@ -97,6 +108,7 @@ class ProfilePageState extends State<ProfilePage> {
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
+                              color: textColor,
                             ),
                           ),
                         ),
@@ -107,7 +119,11 @@ class ProfilePageState extends State<ProfilePage> {
                             backgroundColor: Colors.transparent,
                             shadowColor: Colors.transparent,
                           ),
-                          child: Icon(Icons.edit, size: 20),
+                          child: Icon(
+                            Icons.edit,
+                            size: 20,
+                            color: iconColor,
+                          ),
                         ),
                       ],
                     ),
@@ -116,6 +132,7 @@ class ProfilePageState extends State<ProfilePage> {
               ),
               _buildField(
                 "This is a short bio. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                textColor: textColor,
               ),
               const SizedBox(height: 10),
               Row(
@@ -125,7 +142,7 @@ class ProfilePageState extends State<ProfilePage> {
                     width: 350,
                     height: 40,
                     decoration: BoxDecoration(
-                      color: Theme.of(context).splashColor,
+                      color: containerColor,
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(20), // Round top-right
                         bottomRight: Radius.circular(20), // Round bottom-right
@@ -140,6 +157,7 @@ class ProfilePageState extends State<ProfilePage> {
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
+                              color: textColor,
                             ),
                           ),
                         ),
@@ -150,14 +168,18 @@ class ProfilePageState extends State<ProfilePage> {
                             backgroundColor: Colors.transparent,
                             shadowColor: Colors.transparent,
                           ),
-                          child: Icon(Icons.edit, size: 20),
+                          child: Icon(
+                            Icons.edit,
+                            size: 20,
+                            color: iconColor,
+                          ),
                         ),
                       ],
                     ),
                   ),
                 ],
               ),
-              _buildField("user@example.com"),
+              _buildField("user@example.com", textColor: textColor),
               const SizedBox(height: 10),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -166,7 +188,7 @@ class ProfilePageState extends State<ProfilePage> {
                     width: 350,
                     height: 40,
                     decoration: BoxDecoration(
-                      color: Theme.of(context).splashColor,
+                      color: containerColor,
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(20), // Round top-right
                         bottomRight: Radius.circular(20), // Round bottom-right
@@ -181,6 +203,7 @@ class ProfilePageState extends State<ProfilePage> {
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
+                              color: textColor,
                             ),
                           ),
                         ),
@@ -191,14 +214,18 @@ class ProfilePageState extends State<ProfilePage> {
                             backgroundColor: Colors.transparent,
                             shadowColor: Colors.transparent,
                           ),
-                          child: Icon(Icons.edit, size: 20),
+                          child: Icon(
+                            Icons.edit,
+                            size: 20,
+                            color: iconColor,
+                          ),
                         ),
                       ],
                     ),
                   ),
                 ],
               ),
-              _buildPasswordField("Passss"),
+              _buildPasswordField("Passss", textColor: textColor),
             ],
           ),
         ),
@@ -206,53 +233,21 @@ class ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget buildTitle(BuildContext context, String title) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 1),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primaryContainer,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 15),
-            child: Text(
-              title,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.onPrimaryContainer,
-              ),
-            ),
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.edit,
-              color: Theme.of(context).colorScheme.secondary,
-            ),
-            onPressed: () {
-              //! Handle edit action
-            },
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildField(String value) {
+  Widget _buildField(String value, {required Color textColor}) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
       child: Text(
         value,
-        style: TextStyle(fontSize: 16, color: Colors.grey[700]),
+        style: TextStyle(
+          fontSize: 16,
+          color: textColor.withOpacity(0.7), // Slightly transparent text
+        ),
       ),
     );
   }
 
-  Widget _buildPasswordField(String password) {
+  Widget _buildPasswordField(String password, {required Color textColor}) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.only(left: 15),
@@ -261,12 +256,15 @@ class ProfilePageState extends State<ProfilePage> {
         children: [
           Text(
             _isPasswordVisible ? password : "•" * password.length,
-            style: TextStyle(fontSize: 16, color: Colors.grey[700]),
+            style: TextStyle(
+              fontSize: 16,
+              color: textColor.withOpacity(0.7), // Slightly transparent text
+            ),
           ),
           IconButton(
             icon: Icon(
               _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
-              color: Colors.grey[600],
+              color: textColor,
             ),
             onPressed: () {
               setState(() {
