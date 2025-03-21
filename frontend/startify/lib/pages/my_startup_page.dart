@@ -22,7 +22,11 @@ class MyStartupPage extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(
-                        left: 8, right: 8, top: 8, bottom: 0),
+                      left: 8,
+                      right: 8,
+                      top: 8,
+                      bottom: 0,
+                    ),
                     child: Text(
                       "STARTUP'S NAME",
                       style: TextStyle(
@@ -32,9 +36,7 @@ class MyStartupPage extends StatelessWidget {
                       textAlign: TextAlign.left,
                     ),
                   ),
-                  SizedBox(
-                    width: 100,
-                  ),
+                  SizedBox(width: 100),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 0),
                     child: PlusButton(),
@@ -44,17 +46,12 @@ class MyStartupPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(bottom: 10.0),
                 child: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.black,
-                    ),
-                    child: Text(
-                      "300\$ / 600\$",
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )),
+                  onPressed: () {},
+                  child: Text(
+                    "300\$ / 600\$",
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
+                ),
               ),
               Column(
                 children: [
@@ -69,10 +66,13 @@ class MyStartupPage extends StatelessWidget {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(
-                                color: Theme.of(context).splashColor, width: 3),
+                              color: Theme.of(context).splashColor,
+                              width: 3,
+                            ),
                             image: DecorationImage(
-                              image:
-                                  AssetImage('lib/assets/idea_placeholder.png'),
+                              image: AssetImage(
+                                'lib/assets/idea_placeholder.png',
+                              ),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -86,10 +86,13 @@ class MyStartupPage extends StatelessWidget {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(
-                                color: Theme.of(context).splashColor, width: 3),
+                              color: Theme.of(context).splashColor,
+                              width: 3,
+                            ),
                             image: DecorationImage(
-                              image:
-                                  AssetImage('lib/assets/idea_placeholder.png'),
+                              image: AssetImage(
+                                'lib/assets/idea_placeholder.png',
+                              ),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -108,10 +111,13 @@ class MyStartupPage extends StatelessWidget {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(
-                                color: Theme.of(context).splashColor, width: 3),
+                              color: Theme.of(context).splashColor,
+                              width: 3,
+                            ),
                             image: DecorationImage(
-                              image:
-                                  AssetImage('lib/assets/idea_placeholder.png'),
+                              image: AssetImage(
+                                'lib/assets/idea_placeholder.png',
+                              ),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -180,9 +186,7 @@ class MyStartupPage extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          SizedBox(
-                            width: 160,
-                          ),
+                          SizedBox(width: 160),
                           Icon(Icons.circle_outlined),
                         ],
                       ),
@@ -203,8 +207,9 @@ class MyStartupPage extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     border: Border.all(
-                                        color: Theme.of(context).splashColor,
-                                        width: 3),
+                                      color: Theme.of(context).splashColor,
+                                      width: 3,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -216,30 +221,27 @@ class MyStartupPage extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     border: Border.all(
-                                        color: Theme.of(context).splashColor,
-                                        width: 3),
+                                      color: Theme.of(context).splashColor,
+                                      width: 3,
+                                    ),
                                   ),
                                   child: ElevatedButton(
                                     onPressed: () {},
                                     style: ElevatedButton.styleFrom(
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                10))), // Rounded corners),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                    ),
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        Icon(
-                                          Icons.add,
-                                          size: 50,
-                                        ),
+                                        Icon(Icons.add, size: 50),
                                         Text(
                                           'Add your document.',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                          ),
+                                          style: TextStyle(fontSize: 16),
                                           textAlign: TextAlign.center,
-                                        )
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -252,7 +254,9 @@ class MyStartupPage extends StatelessWidget {
                             child: Text(
                               'More information',
                               style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w500),
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
                           Padding(
@@ -279,9 +283,7 @@ class MyStartupPage extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          SizedBox(
-                            width: 160,
-                          ),
+                          SizedBox(width: 160),
                           Icon(Icons.circle_outlined),
                         ],
                       ),
@@ -302,8 +304,9 @@ class MyStartupPage extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     border: Border.all(
-                                        color: Theme.of(context).splashColor,
-                                        width: 3),
+                                      color: Theme.of(context).splashColor,
+                                      width: 3,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -315,30 +318,27 @@ class MyStartupPage extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     border: Border.all(
-                                        color: Theme.of(context).splashColor,
-                                        width: 3),
+                                      color: Theme.of(context).splashColor,
+                                      width: 3,
+                                    ),
                                   ),
                                   child: ElevatedButton(
                                     onPressed: () {},
                                     style: ElevatedButton.styleFrom(
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                10))), // Rounded corners),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                    ), // Rounded corners),
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        Icon(
-                                          Icons.add,
-                                          size: 50,
-                                        ),
+                                        Icon(Icons.add, size: 50),
                                         Text(
                                           'Add your document.',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                          ),
+                                          style: TextStyle(fontSize: 16),
                                           textAlign: TextAlign.center,
-                                        )
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -351,7 +351,9 @@ class MyStartupPage extends StatelessWidget {
                             child: Text(
                               'More information',
                               style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w500),
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
                           Padding(

@@ -104,19 +104,32 @@ class NotMyStartupPage extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Container(
-                                width: 165,
-                                height: 165,
+                                width: 140,
+                                height: 200,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   border: Border.all(
                                     color: Theme.of(context).splashColor,
                                     width: 3,
                                   ),
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                      'lib/assets/document_placeholder.png',
+                                ),
+                                child: ElevatedButton(
+                                  onPressed: () {},
+                                  style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
                                     ),
-                                    fit: BoxFit.cover,
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(Icons.add, size: 50),
+                                      Text(
+                                        'Add your document.',
+                                        style: TextStyle(fontSize: 16),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
