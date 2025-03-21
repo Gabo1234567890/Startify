@@ -8,4 +8,9 @@
 // TODO RestAPI
 
 //* Backend Tasks
-// TODO 
+// TODO User model
+// TODO Login model
+// TODO Chat model
+// TODO Message model
+// TODO Event model
+// TODO Connect frontend buttons
