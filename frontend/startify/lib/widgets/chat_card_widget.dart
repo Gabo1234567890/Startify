@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:startify/pages/dm_page.dart';
 
 class ChatCardWidget extends StatelessWidget {
   const ChatCardWidget({super.key});
@@ -11,7 +12,16 @@ class ChatCardWidget extends StatelessWidget {
         children: [
           ListTile(
             minVerticalPadding: 25,
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return DmPage();
+                  },
+                ),
+              );
+            },
             leading: CircleAvatar(
               backgroundImage: AssetImage('lib/assets/avatar2.png'),
               radius: 35,
