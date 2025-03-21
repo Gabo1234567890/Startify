@@ -63,7 +63,7 @@
 //               const SizedBox(height: 15),
 //               const Divider(thickness: 1, height: 30),
 //               const SizedBox(height: 15),
-              
+
 //               // Sign In Button
 //               ElevatedButton(
 //                 onPressed: () {
@@ -98,6 +98,7 @@
 // }
 
 import 'package:flutter/material.dart';
+import 'package:startify/pages/create_account_page.dart';
 import 'package:startify/widgets/app_bar_widget_nologin.dart';
 import 'package:startify/services/auth_service.dart';
 
@@ -127,7 +128,9 @@ class _LoginPageState extends State<LoginPage> {
 
       // Handle successful login
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Welcome, ${response['user']['username']}!")),
+        SnackBar(
+          content: Text("Welcome back, ${response['user']['username']}!"),
+        ),
       );
 
       // TODO: Save token & navigate to home screen
@@ -178,7 +181,9 @@ class _LoginPageState extends State<LoginPage> {
                   prefixIcon: Icon(Icons.lock),
                   suffixIcon: IconButton(
                     icon: Icon(
-                      _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                      _isPasswordVisible
+                          ? Icons.visibility
+                          : Icons.visibility_off,
                     ),
                     onPressed: () {
                       setState(() {
@@ -197,22 +202,33 @@ class _LoginPageState extends State<LoginPage> {
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(double.infinity, 50),
                 ),
-                child: _isLoading
-                    ? CircularProgressIndicator(color: Colors.white)
-                    : const Text("Sign In", style: TextStyle(fontSize: 18)),
+                child:
+                    _isLoading
+                        ? CircularProgressIndicator(color: Colors.white)
+                        : const Text("Sign In", style: TextStyle(fontSize: 18)),
               ),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: 15),
 
               // Create Account Button
-              ElevatedButton(
-                onPressed: () {
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CreateAccountPage(),
+                    ),
+                  );
                   //! Handle create account logic
                 },
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(double.infinity, 50),
+                child: const Text(
+                  "Don't have an account? Create one here!",
+                  style: TextStyle(
+                    fontSize: 12,
+                    decoration: TextDecoration.underline,
+                    decorationThickness: 2,
+                  ),
                 ),
-                child: const Text("Create Account", style: TextStyle(fontSize: 18)),
               ),
 
               const SizedBox(height: 20),
@@ -223,4 +239,3 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-
