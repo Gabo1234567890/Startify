@@ -97,6 +97,25 @@ class MyStartupPage extends StatelessWidget {
                     'Mobile application that connects enterpreneur and investitors.')
               ],
             ),
+            Column(
+              children: [
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Text(
+                        'TEAM',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.left,
+                      ),
+                    )
+                  ],
+                )
+              ],
+            )
           ],
         ),
       ),
