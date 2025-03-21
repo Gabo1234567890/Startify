@@ -58,14 +58,18 @@ class ProfilePageState extends State<ProfilePage> {
                   //! Handle account change logic
                 },
                 style: ElevatedButton.styleFrom(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 12,
+                  ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
-                child: const Text("Change Account",
-                    style: TextStyle(fontSize: 16, color: Colors.black)),
+                child: const Text(
+                  "Change Account",
+                  style: TextStyle(fontSize: 16, color: Colors.black),
+                ),
               ),
               const SizedBox(height: 30),
               Row(
@@ -88,23 +92,20 @@ class ProfilePageState extends State<ProfilePage> {
                           child: Text(
                             'About me',
                             style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w600),
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
-                        SizedBox(
-                          width: 185,
-                        ),
+                        SizedBox(width: 185),
                         ElevatedButton(
                           onPressed: () {},
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.transparent,
                             shadowColor: Colors.transparent,
                           ),
-                          child: Icon(
-                            Icons.edit,
-                            size: 20,
-                          ),
-                        )
+                          child: Icon(Icons.edit, size: 20),
+                        ),
                       ],
                     ),
                   ),
@@ -134,23 +135,20 @@ class ProfilePageState extends State<ProfilePage> {
                           child: Text(
                             'Email',
                             style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w600),
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
-                        SizedBox(
-                          width: 218,
-                        ),
+                        SizedBox(width: 218),
                         ElevatedButton(
                           onPressed: () {},
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.transparent,
                             shadowColor: Colors.transparent,
                           ),
-                          child: Icon(
-                            Icons.edit,
-                            size: 20,
-                          ),
-                        )
+                          child: Icon(Icons.edit, size: 20),
+                        ),
                       ],
                     ),
                   ),
@@ -178,23 +176,20 @@ class ProfilePageState extends State<ProfilePage> {
                           child: Text(
                             'Password',
                             style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w600),
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
-                        SizedBox(
-                          width: 184,
-                        ),
+                        SizedBox(width: 184),
                         ElevatedButton(
                           onPressed: () {},
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.transparent,
                             shadowColor: Colors.transparent,
                           ),
-                          child: Icon(
-                            Icons.edit,
-                            size: 20,
-                          ),
-                        )
+                          child: Icon(Icons.edit, size: 20),
+                        ),
                       ],
                     ),
                   ),
@@ -208,7 +203,7 @@ class ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _buildTitle(BuildContext context, String title) {
+  Widget buildTitle(BuildContext context, String title) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 1),
