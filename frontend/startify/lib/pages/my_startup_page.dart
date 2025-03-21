@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:startify/pages/contracts_page.dart';
 import 'package:startify/widgets/app_bar_widget_nologin.dart';
 import 'package:startify/widgets/plus_button_widget.dart';
 import 'package:startify/widgets/edit_button_widget.dart';
@@ -46,7 +47,16 @@ class MyStartupPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(bottom: 10.0),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return ContractsPage();
+                        },
+                      ),
+                    );
+                  },
                   child: Text(
                     "300\$ / 600\$",
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
