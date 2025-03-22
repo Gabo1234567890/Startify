@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'startify.apps.event_meet',
     'startify.apps.search',
     'startify.apps.idea_handling',
+    'startify.apps.debug',
     'corsheaders',
     'rest_framework.authtoken',
 ]
@@ -65,6 +66,7 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',  # Ensures unauthenticated users can register
     ),
 }
 
@@ -81,12 +83,13 @@ MIDDLEWARE = [
 
 CORS_ALLOW_ALL_ORIGINS = True
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'examplehost'
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'example@gmail.com'
-EMAIL_HOST_PASSWORD = 'examplepassword'
+EMAIL_HOST_USER = "example@gmail.com"
+EMAIL_HOST_PASSWORD = "examplepassword"  # Use environment variables instead
+
 
 ROOT_URLCONF = 'startify.urls'
 
