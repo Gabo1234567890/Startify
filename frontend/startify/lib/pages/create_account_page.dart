@@ -3,7 +3,6 @@ import 'package:startify/pages/home_page.dart';
 import 'package:startify/pages/login_page.dart';
 import 'package:startify/services/auth_service.dart';
 import 'package:startify/widgets/app_bar_widget_nologin.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class CreateAccountPage extends StatefulWidget {
   const CreateAccountPage({super.key});
@@ -18,7 +17,6 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
   final TextEditingController _usernameController = TextEditingController();
   bool _isPasswordVisible = false;
   bool _isLoading = false;
-  final FlutterSecureStorage _storage = FlutterSecureStorage();
 
   void _handleRegister() async {
     setState(() {
@@ -33,7 +31,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
       );
 
       final dynamic token = response['token'];
-      await _storage.write(key: 'auth_token', value: token);
+      await AuthService().saveAuthToken(token);
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Welcome, ${response['user']['username']}!")),
