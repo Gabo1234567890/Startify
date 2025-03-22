@@ -26,15 +26,20 @@ class CalendarPageState extends State<CalendarPage> {
     Colors.red,
     Colors.blue,
     Colors.green,
-    Colors.orange
+    Colors.orange,
   ];
   final Random _random = Random();
 
   void _addEvent() {
     if (_eventNameController.text.isEmpty) return;
 
-    DateTime eventDateTime = DateTime(_selectedDate.year, _selectedDate.month,
-        _selectedDate.day, _selectedTime.hour, _selectedTime.minute);
+    DateTime eventDateTime = DateTime(
+      _selectedDate.year,
+      _selectedDate.month,
+      _selectedDate.day,
+      _selectedTime.hour,
+      _selectedTime.minute,
+    );
 
     Color eventColor = _eventColors[_random.nextInt(_eventColors.length)];
 
@@ -76,24 +81,43 @@ class CalendarPageState extends State<CalendarPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            _buildViewButton("Daily", CalendarViewMode.daily, selectedColor,
-                unselectedColor, textColor),
-            _buildViewButton("Weekly", CalendarViewMode.weekly, selectedColor,
-                unselectedColor, textColor),
-            _buildViewButton("Monthly", CalendarViewMode.monthly, selectedColor,
-                unselectedColor, textColor),
+            _buildViewButton(
+              "Daily",
+              CalendarViewMode.daily,
+              selectedColor,
+              unselectedColor,
+              textColor,
+            ),
+            _buildViewButton(
+              "Weekly",
+              CalendarViewMode.weekly,
+              selectedColor,
+              unselectedColor,
+              textColor,
+            ),
+            _buildViewButton(
+              "Monthly",
+              CalendarViewMode.monthly,
+              selectedColor,
+              unselectedColor,
+              textColor,
+            ),
           ],
         ),
         const SizedBox(height: 10),
         Expanded(
-            child:
-                _buildCalendarView(selectedColor, unselectedColor, textColor)),
+          child: _buildCalendarView(selectedColor, unselectedColor, textColor),
+        ),
         Padding(
           padding: EdgeInsets.all(10),
           child: Column(
             children: [
               _buildTextInput(
-                  "Event Name", _eventNameController, selectedColor, textColor),
+                "Event Name",
+                _eventNameController,
+                selectedColor,
+                textColor,
+              ),
               _buildDateTimeSelector(selectedColor, textColor),
             ],
           ),
@@ -104,12 +128,17 @@ class CalendarPageState extends State<CalendarPage> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               _buildRoundedButton(
-                  "Create Event", _addEvent, selectedColor, textColor),
+                "Create Event",
+                _addEvent,
+                selectedColor,
+                textColor,
+              ),
               _buildRoundedButton(
-                  "Delete Event",
-                  _removeEvent,
-                  _selectedEvent != null ? selectedColor : unselectedColor,
-                  textColor),
+                "Delete Event",
+                _removeEvent,
+                _selectedEvent != null ? selectedColor : unselectedColor,
+                textColor,
+              ),
             ],
           ),
         ),
@@ -117,8 +146,13 @@ class CalendarPageState extends State<CalendarPage> {
     );
   }
 
-  Widget _buildViewButton(String text, CalendarViewMode mode,
-      Color selectedColor, Color unselectedColor, Color textColor) {
+  Widget _buildViewButton(
+    String text,
+    CalendarViewMode mode,
+    Color selectedColor,
+    Color unselectedColor,
+    Color textColor,
+  ) {
     return GestureDetector(
       onTap: () => setState(() => _viewMode = mode),
       child: Container(
@@ -132,8 +166,12 @@ class CalendarPageState extends State<CalendarPage> {
     );
   }
 
-  Widget _buildTextInput(String hint, TextEditingController controller,
-      Color backgroundColor, Color textColor) {
+  Widget _buildTextInput(
+    String hint,
+    TextEditingController controller,
+    Color backgroundColor,
+    Color textColor,
+  ) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
@@ -145,7 +183,7 @@ class CalendarPageState extends State<CalendarPage> {
         decoration: InputDecoration(
           border: InputBorder.none,
           hintText: hint,
-          hintStyle: TextStyle(color: textColor.withOpacity(0.7)),
+          hintStyle: TextStyle(color: textColor.withValues(alpha: 0.7)),
         ),
         style: TextStyle(color: textColor),
       ),
@@ -180,16 +218,18 @@ class CalendarPageState extends State<CalendarPage> {
                 initialTime: _selectedTime,
                 builder: (context, child) {
                   return MediaQuery(
-                    data: MediaQuery.of(context)
-                        .copyWith(alwaysUse24HourFormat: false),
+                    data: MediaQuery.of(
+                      context,
+                    ).copyWith(alwaysUse24HourFormat: false),
                     child: child!,
                   );
                 },
               );
 
               if (picked != null) {
-                setState(() =>
-                    _selectedTime = TimeOfDay(hour: picked.hour, minute: 0));
+                setState(
+                  () => _selectedTime = TimeOfDay(hour: picked.hour, minute: 0),
+                );
               }
             },
             child: Text(
@@ -203,7 +243,11 @@ class CalendarPageState extends State<CalendarPage> {
   }
 
   Widget _buildRoundedButton(
-      String text, VoidCallback onTap, Color backgroundColor, Color textColor) {
+    String text,
+    VoidCallback onTap,
+    Color backgroundColor,
+    Color textColor,
+  ) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -218,7 +262,10 @@ class CalendarPageState extends State<CalendarPage> {
   }
 
   Widget _buildCalendarView(
-      Color selectedColor, Color unselectedColor, Color textColor) {
+    Color selectedColor,
+    Color unselectedColor,
+    Color textColor,
+  ) {
     switch (_viewMode) {
       case CalendarViewMode.daily:
         return _buildDailyView(selectedColor, unselectedColor, textColor);
@@ -231,11 +278,17 @@ class CalendarPageState extends State<CalendarPage> {
   }
 
   Widget _buildWeeklyView(
-      Color selectedColor, Color unselectedColor, Color textColor) {
-    DateTime startOfWeek =
-        _currentDate.subtract(Duration(days: _currentDate.weekday - 1));
-    List<DateTime> weekDays =
-        List.generate(7, (index) => startOfWeek.add(Duration(days: index)));
+    Color selectedColor,
+    Color unselectedColor,
+    Color textColor,
+  ) {
+    DateTime startOfWeek = _currentDate.subtract(
+      Duration(days: _currentDate.weekday - 1),
+    );
+    List<DateTime> weekDays = List.generate(
+      7,
+      (index) => startOfWeek.add(Duration(days: index)),
+    );
 
     return Column(
       children: [
@@ -251,11 +304,13 @@ class CalendarPageState extends State<CalendarPage> {
               },
             ),
             Text(
-                "Week of ${startOfWeek.day}/${startOfWeek.month}/${startOfWeek.year}",
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: textColor)),
+              "Week of ${startOfWeek.day}/${startOfWeek.month}/${startOfWeek.year}",
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: textColor,
+              ),
+            ),
             IconButton(
               icon: Icon(Icons.arrow_forward, color: textColor),
               onPressed: () {
@@ -271,48 +326,60 @@ class CalendarPageState extends State<CalendarPage> {
             itemCount: weekDays.length,
             itemBuilder: (context, index) {
               DateTime day = weekDays[index];
-              List<Map<String, dynamic>> dayEvents = _events.entries
-                  .where((entry) =>
-                      entry.key.year == day.year &&
-                      entry.key.month == day.month &&
-                      entry.key.day == day.day)
-                  .expand((entry) => entry.value)
-                  .toList();
+              List<Map<String, dynamic>> dayEvents =
+                  _events.entries
+                      .where(
+                        (entry) =>
+                            entry.key.year == day.year &&
+                            entry.key.month == day.month &&
+                            entry.key.day == day.day,
+                      )
+                      .expand((entry) => entry.value)
+                      .toList();
 
               return Padding(
                 padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("${day.day}/${day.month}/${day.year}",
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: textColor)),
+                    Text(
+                      "${day.day}/${day.month}/${day.year}",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: textColor,
+                      ),
+                    ),
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(
-                        children: dayEvents
-                            .map((event) => GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      _selectedEvent = event;
-                                    });
-                                  },
-                                  child: Container(
-                                    padding: EdgeInsets.all(8),
-                                    margin: EdgeInsets.only(right: 4, top: 8),
-                                    decoration: BoxDecoration(
-                                      color: _selectedEvent == event
-                                          ? selectedColor
-                                          : event["color"],
-                                      borderRadius: BorderRadius.circular(10),
+                        children:
+                            dayEvents
+                                .map(
+                                  (event) => GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        _selectedEvent = event;
+                                      });
+                                    },
+                                    child: Container(
+                                      padding: EdgeInsets.all(8),
+                                      margin: EdgeInsets.only(right: 4, top: 8),
+                                      decoration: BoxDecoration(
+                                        color:
+                                            _selectedEvent == event
+                                                ? selectedColor
+                                                : event["color"],
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Text(
+                                        event["name"],
+                                        style: TextStyle(color: Colors.white),
+                                      ),
                                     ),
-                                    child: Text(event["name"],
-                                        style: TextStyle(color: Colors.white)),
                                   ),
-                                ))
-                            .toList(),
+                                )
+                                .toList(),
                       ),
                     ),
                   ],
@@ -326,7 +393,10 @@ class CalendarPageState extends State<CalendarPage> {
   }
 
   Widget _buildDailyView(
-      Color selectedColor, Color unselectedColor, Color textColor) {
+    Color selectedColor,
+    Color unselectedColor,
+    Color textColor,
+  ) {
     return Column(
       children: [
         Row(
@@ -341,11 +411,13 @@ class CalendarPageState extends State<CalendarPage> {
               },
             ),
             Text(
-                "${_currentDate.day}/${_currentDate.month}/${_currentDate.year}",
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: textColor)),
+              "${_currentDate.day}/${_currentDate.month}/${_currentDate.year}",
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: textColor,
+              ),
+            ),
             IconButton(
               icon: Icon(Icons.arrow_forward, color: textColor),
               onPressed: () {
@@ -360,40 +432,50 @@ class CalendarPageState extends State<CalendarPage> {
           child: ListView.builder(
             itemCount: 24,
             itemBuilder: (context, hour) {
-              DateTime eventTime = DateTime(_currentDate.year,
-                  _currentDate.month, _currentDate.day, hour);
+              DateTime eventTime = DateTime(
+                _currentDate.year,
+                _currentDate.month,
+                _currentDate.day,
+                hour,
+              );
               List<Map<String, dynamic>>? eventList = _events[eventTime];
 
               return Padding(
                 padding: EdgeInsets.symmetric(vertical: 8, horizontal: 20),
                 child: Row(
                   children: [
-                    Text("${hour.toString().padLeft(2, '0')}:00 ",
-                        style: TextStyle(color: textColor)),
+                    Text(
+                      "${hour.toString().padLeft(2, '0')}:00 ",
+                      style: TextStyle(color: textColor),
+                    ),
                     Expanded(
                       child: Column(
-                        children: eventList
-                                ?.map((e) => GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          _selectedEvent = e;
-                                        });
-                                      },
-                                      child: Container(
-                                        padding: EdgeInsets.all(8),
-                                        margin: EdgeInsets.only(bottom: 4),
-                                        decoration: BoxDecoration(
-                                          color: _selectedEvent == e
-                                              ? selectedColor
-                                              : e["color"],
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        child: Text(e["name"],
-                                            style:
-                                                TextStyle(color: Colors.white)),
+                        children:
+                            eventList
+                                ?.map(
+                                  (e) => GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        _selectedEvent = e;
+                                      });
+                                    },
+                                    child: Container(
+                                      padding: EdgeInsets.all(8),
+                                      margin: EdgeInsets.only(bottom: 4),
+                                      decoration: BoxDecoration(
+                                        color:
+                                            _selectedEvent == e
+                                                ? selectedColor
+                                                : e["color"],
+                                        borderRadius: BorderRadius.circular(10),
                                       ),
-                                    ))
+                                      child: Text(
+                                        e["name"],
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                )
                                 .toList() ??
                             [],
                       ),
@@ -409,16 +491,28 @@ class CalendarPageState extends State<CalendarPage> {
   }
 
   Widget _buildMonthlyView(
-      Color selectedColor, Color unselectedColor, Color textColor) {
-    DateTime firstDayOfMonth =
-        DateTime(_currentDate.year, _currentDate.month, 1);
-    DateTime firstDisplayedDay =
-        firstDayOfMonth.subtract(Duration(days: firstDayOfMonth.weekday - 1));
+    Color selectedColor,
+    Color unselectedColor,
+    Color textColor,
+  ) {
+    DateTime firstDayOfMonth = DateTime(
+      _currentDate.year,
+      _currentDate.month,
+      1,
+    );
+    DateTime firstDisplayedDay = firstDayOfMonth.subtract(
+      Duration(days: firstDayOfMonth.weekday - 1),
+    );
     List<DateTime> calendarDays = List.generate(
-        42, (index) => firstDisplayedDay.add(Duration(days: index)));
+      42,
+      (index) => firstDisplayedDay.add(Duration(days: index)),
+    );
 
-    DateTime selectedDay =
-        DateTime(_currentDate.year, _currentDate.month, _currentDate.day);
+    DateTime selectedDay = DateTime(
+      _currentDate.year,
+      _currentDate.month,
+      _currentDate.day,
+    );
 
     return Column(
       children: [
@@ -429,22 +523,31 @@ class CalendarPageState extends State<CalendarPage> {
               icon: Icon(Icons.arrow_back, color: textColor),
               onPressed: () {
                 setState(() {
-                  _currentDate =
-                      DateTime(_currentDate.year, _currentDate.month - 1, 1);
+                  _currentDate = DateTime(
+                    _currentDate.year,
+                    _currentDate.month - 1,
+                    1,
+                  );
                 });
               },
             ),
-            Text("${_currentDate.month}/${_currentDate.year}",
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: textColor)),
+            Text(
+              "${_currentDate.month}/${_currentDate.year}",
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: textColor,
+              ),
+            ),
             IconButton(
               icon: Icon(Icons.arrow_forward, color: textColor),
               onPressed: () {
                 setState(() {
-                  _currentDate =
-                      DateTime(_currentDate.year, _currentDate.month + 1, 1);
+                  _currentDate = DateTime(
+                    _currentDate.year,
+                    _currentDate.month + 1,
+                    1,
+                  );
                 });
               },
             ),
@@ -455,15 +558,22 @@ class CalendarPageState extends State<CalendarPage> {
           padding: EdgeInsets.symmetric(vertical: 5),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-                .map((day) => Expanded(
-                      child: Center(
-                        child: Text(day,
+            children:
+                ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+                    .map(
+                      (day) => Expanded(
+                        child: Center(
+                          child: Text(
+                            day,
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, color: textColor)),
+                              fontWeight: FontWeight.bold,
+                              color: textColor,
+                            ),
+                          ),
+                        ),
                       ),
-                    ))
-                .toList(),
+                    )
+                    .toList(),
           ),
         ),
         const SizedBox(height: 15),
@@ -473,60 +583,69 @@ class CalendarPageState extends State<CalendarPage> {
             child: GridView.count(
               childAspectRatio: 0.85,
               crossAxisCount: 7,
-              children: calendarDays.map((day) {
-                DateTime dayKey = DateTime(day.year, day.month, day.day);
-                bool hasEvent = _events.keys.any((eventDay) =>
-                    eventDay.year == day.year &&
-                    eventDay.month == day.month &&
-                    eventDay.day == day.day);
-                bool isSelected = selectedDay == dayKey;
-                bool isCurrentMonth = day.month == _currentDate.month;
+              children:
+                  calendarDays.map((day) {
+                    DateTime dayKey = DateTime(day.year, day.month, day.day);
+                    bool hasEvent = _events.keys.any(
+                      (eventDay) =>
+                          eventDay.year == day.year &&
+                          eventDay.month == day.month &&
+                          eventDay.day == day.day,
+                    );
+                    bool isSelected = selectedDay == dayKey;
+                    bool isCurrentMonth = day.month == _currentDate.month;
 
-                return GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _currentDate = dayKey;
-                    });
-                  },
-                  child: Container(
-                    margin: EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      color: isSelected
-                          ? selectedColor
-                          : (hasEvent
-                              ? selectedColor
-                              : (isCurrentMonth
-                                  ? unselectedColor
-                                  : unselectedColor.withOpacity(0.5))),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "${day.day}",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: isSelected
-                              ? (Theme.of(context).brightness ==
-                                      Brightness.light
-                                  ? Colors.black
-                                  : Colors
-                                      .white) // Black text in light mode, white in dark mode
-                              : (hasEvent
-                                  ? (Theme.of(context).brightness ==
-                                          Brightness.light
-                                      ? Colors.black
-                                      : Colors
-                                          .white) // Black text in light mode for events
-                                  : (isCurrentMonth
-                                      ? textColor
-                                      : textColor.withOpacity(0.5))),
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _currentDate = dayKey;
+                        });
+                      },
+                      child: Container(
+                        margin: EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          color:
+                              isSelected
+                                  ? selectedColor
+                                  : (hasEvent
+                                      ? selectedColor
+                                      : (isCurrentMonth
+                                          ? unselectedColor
+                                          : unselectedColor.withValues(
+                                            alpha: 0.7,
+                                          ))),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "${day.day}",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color:
+                                  isSelected
+                                      ? (Theme.of(context).brightness ==
+                                              Brightness.light
+                                          ? Colors.black
+                                          : Colors
+                                              .white) // Black text in light mode, white in dark mode
+                                      : (hasEvent
+                                          ? (Theme.of(context).brightness ==
+                                                  Brightness.light
+                                              ? Colors.black
+                                              : Colors
+                                                  .white) // Black text in light mode for events
+                                          : (isCurrentMonth
+                                              ? textColor
+                                              : textColor.withValues(
+                                                alpha: 0.7,
+                                              ))),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                );
-              }).toList(),
+                    );
+                  }).toList(),
             ),
           ),
         ),

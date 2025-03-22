@@ -24,7 +24,7 @@ class ChatBubbleWidget extends StatelessWidget {
           color:
               isSentByMe
                   ? Theme.of(context).colorScheme.tertiaryContainer
-                  : Theme.of(context).colorScheme.primaryContainer,
+                  : Theme.of(context).colorScheme.secondaryContainer,
           borderRadius: BorderRadius.only(
             topLeft: const Radius.circular(12),
             topRight: const Radius.circular(12),

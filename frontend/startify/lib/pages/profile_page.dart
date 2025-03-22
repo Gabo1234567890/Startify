@@ -81,9 +81,7 @@ class ProfilePageState extends State<ProfilePage> {
                   foregroundColor: textColor,
                   backgroundColor: containerColor,
                 ),
-                child: const Text(
-                  "Change Account",
-                ),
+                child: const Text("Change Account"),
               ),
               const SizedBox(height: 30),
               Row(
@@ -119,11 +117,7 @@ class ProfilePageState extends State<ProfilePage> {
                             backgroundColor: Colors.transparent,
                             shadowColor: Colors.transparent,
                           ),
-                          child: Icon(
-                            Icons.edit,
-                            size: 20,
-                            color: iconColor,
-                          ),
+                          child: Icon(Icons.edit, size: 20, color: iconColor),
                         ),
                       ],
                     ),
@@ -168,11 +162,7 @@ class ProfilePageState extends State<ProfilePage> {
                             backgroundColor: Colors.transparent,
                             shadowColor: Colors.transparent,
                           ),
-                          child: Icon(
-                            Icons.edit,
-                            size: 20,
-                            color: iconColor,
-                          ),
+                          child: Icon(Icons.edit, size: 20, color: iconColor),
                         ),
                       ],
                     ),
@@ -214,11 +204,7 @@ class ProfilePageState extends State<ProfilePage> {
                             backgroundColor: Colors.transparent,
                             shadowColor: Colors.transparent,
                           ),
-                          child: Icon(
-                            Icons.edit,
-                            size: 20,
-                            color: iconColor,
-                          ),
+                          child: Icon(Icons.edit, size: 20, color: iconColor),
                         ),
                       ],
                     ),
@@ -241,7 +227,7 @@ class ProfilePageState extends State<ProfilePage> {
         value,
         style: TextStyle(
           fontSize: 16,
-          color: textColor.withOpacity(0.7), // Slightly transparent text
+          color: textColor.withValues(alpha: 0.7), // Slightly transparent text
         ),
       ),
     );
@@ -258,7 +244,9 @@ class ProfilePageState extends State<ProfilePage> {
             _isPasswordVisible ? password : "•" * password.length,
             style: TextStyle(
               fontSize: 16,
-              color: textColor.withOpacity(0.7), // Slightly transparent text
+              color: textColor.withValues(
+                alpha: 0.7,
+              ), // Slightly transparent text
             ),
           ),
           IconButton(
