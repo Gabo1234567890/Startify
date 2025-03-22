@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
 final ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
   scaffoldBackgroundColor: Color.fromRGBO(195, 244, 248, 1),
   iconTheme: const IconThemeData(color: Colors.black),
   appBarTheme: const AppBarTheme(
-    backgroundColor: Color.fromRGBO(206, 252, 255, 1), // AppBar color
+    backgroundColor: Color.fromRGBO(195, 244, 248, 1), // AppBar color
     foregroundColor: Colors.black, // Text & icons color
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
@@ -19,11 +15,12 @@ final ThemeData lightTheme = ThemeData(
       foregroundColor: Colors.black,
     ),
   ),
-  bottomNavigationBarTheme: BottomNavigationBarThemeData(
-    backgroundColor: Color.fromRGBO(206, 252, 255, 1),
-    selectedItemColor: Color.fromRGBO(224, 253, 255, 1), // Selected item color
-    unselectedItemColor:
-        Color.fromRGBO(206, 252, 255, 1), // Unselected item color
+  colorScheme: ColorScheme.light(
+    surface: Color.fromRGBO(195, 244, 248, 1), // NavigationBar background color
+    secondaryContainer:
+        Color.fromRGBO(224, 253, 255, 1), // Selected item indicator color
+    onSecondaryContainer: Colors.black, // Selected item text color
+    onSurface: Colors.black, // Unselected item text color
   ),
 );
 
@@ -41,74 +38,10 @@ final ThemeData darkTheme = ThemeData(
       foregroundColor: Colors.white,
     ),
   ),
-  bottomNavigationBarTheme: BottomNavigationBarThemeData(
-    backgroundColor: Color(0xFF213349),
-    selectedItemColor: Colors.blueAccent, // Selected item color
-    unselectedItemColor: Colors.grey, // Unselected item color
+  colorScheme: ColorScheme.dark(
+    surface: Color(0xFF213349), // NavigationBar background color
+    secondaryContainer: Color(0xFF2D526C), // Selected item indicator color
+    onSecondaryContainer: Colors.white, // Selected item text color
+    onSurface: Colors.white, // Unselected item text color
   ),
 );
-
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  bool _isDarkMode = false;
-
-  void _toggleTheme() {
-    setState(() {
-      _isDarkMode = !_isDarkMode;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: _isDarkMode ? darkTheme : lightTheme,
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Theme Switcher'),
-          actions: [
-            IconButton(
-              icon: Icon(_isDarkMode ? Icons.light_mode : Icons.dark_mode),
-              onPressed: _toggleTheme,
-            ),
-          ],
-        ),
-        body: Center(
-          child: ElevatedButton(
-            onPressed: () {},
-            child: Text('Test Button'),
-          ),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor:
-              Theme.of(context).bottomNavigationBarTheme.backgroundColor,
-          selectedItemColor:
-              Theme.of(context).bottomNavigationBarTheme.selectedItemColor,
-          unselectedItemColor:
-              Theme.of(context).bottomNavigationBarTheme.unselectedItemColor,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.business),
-              label: 'Business',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.school),
-              label: 'School',
-            ),
-          ],
-          currentIndex: 0, // Set the current index
-          onTap: (int index) {
-            // Handle tap
-          },
-        ),
-      ),
-    );
-  }
-}

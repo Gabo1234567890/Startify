@@ -12,31 +12,34 @@ from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 from .models import UserProfile 
 from .serializers import UserSerializer, UserProfileSerializer
+from rest_framework.permissions import AllowAny
+from rest_framework.decorators import permission_classes
 
 @api_view(['POST'])
+@permission_classes([AllowAny])  # Allows anyone to access this endpoint
 def register_user(request):
     data = request.data
     if User.objects.filter(email=data['email']).exists():
         return Response({'error': 'Email already registered'}, status=status.HTTP_400_BAD_REQUEST)
 
+    # token = default_token_generator.make_token(user)
+    # uid = urlsafe_base64_encode(force_bytes(user.pk))
+    # domain = get_current_site(request).domain
+    # verification_link = f"http://{domain}/api/verify-email/{uid}/{token}/"
+
+    # send_mail(
+    #     "Verify Your Email",
+    #     f"Click the link to verify your email: {verification_link}",
+    #     "your-email@gmail.com",
+    #     [user.email],
+    #     fail_silently=False,
+    # )
+    
     user = User.objects.create(
         username=data['username'],
         email=data['email'],
         password=make_password(data['password']),
         is_active=False 
-    )
-
-    token = default_token_generator.make_token(user)
-    uid = urlsafe_base64_encode(force_bytes(user.pk))
-    domain = get_current_site(request).domain
-    verification_link = f"http://{domain}/api/verify-email/{uid}/{token}/"
-
-    send_mail(
-        "Verify Your Email",
-        f"Click the link to verify your email: {verification_link}",
-        "your-email@gmail.com",
-        [user.email],
-        fail_silently=False,
     )
 
     return Response({'message': 'User registered. Check your email for verification'}, status=status.HTTP_201_CREATED)
