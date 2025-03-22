@@ -27,7 +27,7 @@ class DmPage extends StatelessWidget {
                       isSentByMe: false,
                     ),
                     ChatBubbleWidget(
-                      message: "Doing great! Working on a Flutter project.",
+                      message: "Doing great! Working on my HackTues11 project.",
                       isSentByMe: true,
                     ),
                   ].reversed.toList(),
