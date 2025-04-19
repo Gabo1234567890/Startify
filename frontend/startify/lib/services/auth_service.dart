@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthService {
   final String baseUrl = "http://10.0.2.2:8000";
+  final storage = FlutterSecureStorage();
 
   Future<Map<String, dynamic>> register(
     String username,
@@ -38,9 +40,45 @@ class AuthService {
     );
 
     if (response.statusCode == 200) {
-      return jsonDecode(response.body);
+      final data = jsonDecode(response.body);
+      final accessToken = data["access_token"];
+      await storage.write(key: "access_token", value: accessToken);
+      return data;
     } else {
       throw Exception("Failed to login: ${response.body}");
+    }
+  }
+
+  Future<Map<String, dynamic>> getProfile() async {
+    final token = await storage.read(key: "access_token");
+    final response = await http.get(
+      Uri.parse("$baseUrl/me"),
+      headers: {
+        "Authorization": "Bearer $token",
+        "Content-Type": "application/json",
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception("Failed to load profile: ${response.body}");
+    }
+  }
+
+  Future<void> updateProfile({required String bio}) async {
+    final token = await storage.read(key: "access_token");
+    final response = await http.put(
+      Uri.parse("$baseUrl/me"),
+      headers: {
+        "Authorization": "Bearer $token",
+        "Content-Type": "application/json",
+      },
+      body: jsonEncode({"bio": bio}),
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception("Failed to update profile: ${response.body}");
     }
   }
 }

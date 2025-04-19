@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:startify/data/notifiers.dart';
 import 'package:startify/pages/create_account_page.dart';
 import 'package:startify/widget_tree.dart';
 import 'package:startify/widgets/app_bar_widget_nologin.dart';
@@ -18,7 +19,7 @@ class _LoginPageState extends State<LoginPage> {
   bool _isPasswordVisible = false;
   bool _isLoading = false;
 
-  void _handleRegister() async {
+  void _handleLogin() async {
     setState(() {
       _isLoading = true;
     });
@@ -34,6 +35,7 @@ class _LoginPageState extends State<LoginPage> {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text("Welcome back, $username!")));
+      selectedPageNotifier.value = 0;
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => WidgetTree()),
@@ -102,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
 
               // Sign In Button
               ElevatedButton(
-                onPressed: _isLoading ? null : _handleRegister,
+                onPressed: _isLoading ? null : _handleLogin,
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(double.infinity, 50),
                 ),

@@ -16,3 +16,14 @@ class UserResponse(BaseModel):
 
     class Config:
         orm_mode = True
+
+class UserProfile(BaseModel):
+    username: str
+    bio: str | None = None
+    email: EmailStr
+
+    class Config:
+        orm_mode = True
+
+class ProfileUpdate(BaseModel):
+    bio: str | None = None

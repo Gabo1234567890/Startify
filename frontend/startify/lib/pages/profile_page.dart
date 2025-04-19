@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:startify/data/notifiers.dart';
+import 'package:startify/pages/create_account_page.dart';
+import 'package:startify/pages/login_page.dart';
+import 'package:startify/services/auth_service.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -8,212 +12,322 @@ class ProfilePage extends StatefulWidget {
 }
 
 class ProfilePageState extends State<ProfilePage> {
-  bool _isPasswordVisible = false; //* Controls password visibility
+  bool _isPasswordVisible = false;
+  bool _isLoading = true;
+  bool isEditingBio = false;
+  late TextEditingController bioController;
+  Map<String, dynamic>? userData;
+
+  Future<void> _loadUserData() async {
+    try {
+      final data = await AuthService().getProfile();
+      setState(() {
+        userData = data;
+        _isLoading = false;
+      });
+    } catch (e) {
+      print("Error fetching profile: $e");
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+    bioController = TextEditingController(text: userData?["bio"] ?? "");
+    bioController.selection = TextSelection.fromPosition(
+      TextPosition(offset: bioController.text.length),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    // Determine the current theme mode
-    final bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    if (_isLoading) {
+      return Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
 
-    // Define colors based on the theme mode
-    final Color containerColor =
-        isDarkMode ? Color(0xFF2D526C) : Color.fromRGBO(224, 253, 255, 1);
-    final Color textColor = isDarkMode ? Colors.white : Colors.black;
-    final Color iconColor = isDarkMode ? Colors.white : Colors.black;
+    if (userData == null) {
+      return Scaffold(
+        body: ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => CreateAccountPage()),
+            );
+          },
+          style: ElevatedButton.styleFrom(
+            minimumSize: Size(double.infinity, 50),
+          ),
+          child: const Text("Create Account", style: TextStyle(fontSize: 18)),
+        ),
+      );
+    }
 
     return Scaffold(
       body: SingleChildScrollView(
         physics: ClampingScrollPhysics(),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
-          child: Column(
-            children: [
-              Center(
-                child: Stack(
-                  children: [
-                    CircleAvatar(
-                      radius: 100,
-                      backgroundImage: AssetImage(
-                        "lib/assets/avatar2.png", //! Get from backend via REST
-                      ),
-                    ),
+        child: ValueListenableBuilder(
+          valueListenable: darkModeNotifier,
+          builder: (context, darkMode, child) {
+            final Color containerColor =
+                darkMode ? Color(0xFF2D526C) : Color.fromRGBO(224, 253, 255, 1);
+            final Color textColor = darkMode ? Colors.white : Colors.black;
+            final Color iconColor = darkMode ? Colors.white : Colors.black;
+            return Padding(
+              padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
+              child: Column(
+                children: [
+                  Center(
+                    child: Stack(
+                      children: [
+                        CircleAvatar(
+                          radius: 100,
+                          backgroundImage: AssetImage(
+                            "lib/assets/avatar2.png", //! Get from backend via REST
+                          ),
+                        ),
 
-                    //* Edit Profile Picture Button
-                    Positioned(
-                      bottom: 5,
-                      left: 5,
-                      child: CircleAvatar(
-                        radius: 25,
-                        backgroundColor: containerColor,
-                        child: IconButton(
-                          icon: Icon(Icons.edit, color: iconColor),
-                          onPressed: () {
-                            //! Handle profile picture change
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 26),
-              Text(
-                "Name",
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: textColor,
-                ),
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  //! Handle account change logic
-                },
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 12,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  foregroundColor: textColor,
-                  backgroundColor: containerColor,
-                ),
-                child: const Text("Change Account"),
-              ),
-              const SizedBox(height: 30),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: 350,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: containerColor,
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(20), // Round top-right
-                        bottomRight: Radius.circular(20), // Round bottom-right
-                      ),
-                    ),
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'About me',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                              color: textColor,
+                        //* Edit Profile Picture Button
+                        Positioned(
+                          bottom: 5,
+                          left: 5,
+                          child: CircleAvatar(
+                            radius: 25,
+                            backgroundColor: containerColor,
+                            child: IconButton(
+                              icon: Icon(Icons.edit, color: iconColor),
+                              onPressed: () {
+                                //! Handle profile picture change
+                              },
                             ),
                           ),
-                        ),
-                        SizedBox(width: 185),
-                        ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.transparent,
-                            shadowColor: Colors.transparent,
-                          ),
-                          child: Icon(Icons.edit, size: 20, color: iconColor),
                         ),
                       ],
                     ),
                   ),
-                ],
-              ),
-              _buildField(
-                "This is a short bio. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-                textColor: textColor,
-              ),
-              const SizedBox(height: 10),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: 350,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: containerColor,
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(20), // Round top-right
-                        bottomRight: Radius.circular(20), // Round bottom-right
-                      ),
-                    ),
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'Email',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                              color: textColor,
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 218),
-                        ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.transparent,
-                            shadowColor: Colors.transparent,
-                          ),
-                          child: Icon(Icons.edit, size: 20, color: iconColor),
-                        ),
-                      ],
+                  const SizedBox(height: 26),
+                  Text(
+                    userData?["username"],
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: textColor,
                     ),
                   ),
-                ],
-              ),
-              _buildField("user@example.com", textColor: textColor),
-              const SizedBox(height: 10),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: 350,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: containerColor,
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(20), // Round top-right
-                        bottomRight: Radius.circular(20), // Round bottom-right
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginPage()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 24,
+                        vertical: 12,
                       ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      foregroundColor: textColor,
+                      backgroundColor: containerColor,
                     ),
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'Password',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                              color: textColor,
+                    child: const Text("Change Account"),
+                  ),
+                  const SizedBox(height: 30),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: 350,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: containerColor,
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(20),
+                            bottomRight: Radius.circular(20),
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                'About me',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                  color: textColor,
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 185),
+                            ElevatedButton(
+                              onPressed: () async {
+                                if (isEditingBio) {
+                                  try {
+                                    await AuthService().updateProfile(
+                                      bio: bioController.text,
+                                    );
+                                    setState(() {
+                                      isEditingBio = false;
+                                    });
+                                  } catch (e) {
+                                    print("Error updating bio: $e");
+                                  }
+                                } else {
+                                  setState(() {
+                                    isEditingBio = true;
+                                    bioController
+                                        .selection = TextSelection.fromPosition(
+                                      TextPosition(
+                                        offset: bioController.text.length,
+                                      ),
+                                    );
+                                  });
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.transparent,
+                                shadowColor: Colors.transparent,
+                              ),
+                              child: Icon(
+                                isEditingBio ? Icons.check : Icons.edit,
+                                size: 20,
+                                color: iconColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  isEditingBio
+                      ? Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12.0,
+                          vertical: 8.0,
+                        ),
+                        child: TextField(
+                          controller: bioController,
+                          autofocus: true,
+                          decoration: InputDecoration(
+                            hintText: "Enter your bio...",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
                             ),
                           ),
+                          style: TextStyle(color: textColor),
+                          maxLines: null,
                         ),
-                        SizedBox(width: 184),
-                        ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.transparent,
-                            shadowColor: Colors.transparent,
+                      )
+                      : _buildField(
+                        bioController.text.isNotEmpty
+                            ? bioController.text
+                            : "No bio.",
+                        textColor: textColor,
+                      ),
+                  const SizedBox(height: 10),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: 350,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: containerColor,
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(20), // Round top-right
+                            bottomRight: Radius.circular(
+                              20,
+                            ), // Round bottom-right
                           ),
-                          child: Icon(Icons.edit, size: 20, color: iconColor),
                         ),
-                      ],
-                    ),
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                'Email',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                  color: textColor,
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 218),
+                            ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.transparent,
+                                shadowColor: Colors.transparent,
+                              ),
+                              child: Icon(
+                                Icons.edit,
+                                size: 20,
+                                color: iconColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
+                  _buildField(userData?['email'], textColor: textColor),
+                  const SizedBox(height: 10),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: 350,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: containerColor,
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(20), // Round top-right
+                            bottomRight: Radius.circular(
+                              20,
+                            ), // Round bottom-right
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                'Password',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                  color: textColor,
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 184),
+                            ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.transparent,
+                                shadowColor: Colors.transparent,
+                              ),
+                              child: Icon(
+                                Icons.edit,
+                                size: 20,
+                                color: iconColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  _buildPasswordField("Passss", textColor: textColor),
                 ],
               ),
-              _buildPasswordField("Passss", textColor: textColor),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

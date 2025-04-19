@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:startify/data/notifiers.dart';
 import 'package:startify/pages/login_page.dart';
 import 'package:startify/services/auth_service.dart';
 import 'package:startify/widget_tree.dart';
@@ -33,7 +34,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Welcome, ${response['username']}!")),
       );
-
+      selectedPageNotifier.value = 0;
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => WidgetTree()),
