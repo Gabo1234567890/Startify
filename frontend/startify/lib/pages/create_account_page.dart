@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:startify/pages/home_page.dart';
 import 'package:startify/pages/login_page.dart';
 import 'package:startify/services/auth_service.dart';
+import 'package:startify/widget_tree.dart';
 import 'package:startify/widgets/app_bar_widget_nologin.dart';
 
 class CreateAccountPage extends StatefulWidget {
@@ -31,12 +31,12 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
       );
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Welcome, ${response['user']['username']}!")),
+        SnackBar(content: Text("Welcome, ${response['username']}!")),
       );
 
-      Navigator.pushReplacement(
+      Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+        MaterialPageRoute(builder: (context) => WidgetTree()),
       );
     } catch (e) {
       ScaffoldMessenger.of(
