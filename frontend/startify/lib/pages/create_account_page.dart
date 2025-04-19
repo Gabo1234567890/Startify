@@ -18,39 +18,36 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
   bool _isPasswordVisible = false;
   bool _isLoading = false;
 
-  // void _handleRegister() async {
-  //   setState(() {
-  //     _isLoading = true;
-  //   });
+  void _handleRegister() async {
+    setState(() {
+      _isLoading = true;
+    });
 
-  //   try {
-  //     final response = await AuthService().register(
-  //       _emailController.text,
-  //       _passwordController.text,
-  //       _usernameController.text,
-  //     );
+    try {
+      final response = await AuthService().register(
+        _usernameController.text.trim(),
+        _emailController.text.trim(),
+        _passwordController.text.trim(),
+      );
 
-  //     final dynamic token = response['token'];
-  //     await AuthService().saveAuthToken(token);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Welcome, ${response['user']['username']}!")),
+      );
 
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(content: Text("Welcome, ${response['user']['username']}!")),
-  //     );
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Registration failed: $e")));
+    }
 
-  //     Navigator.pushReplacement(
-  //       context,
-  //       MaterialPageRoute(builder: (context) => HomePage()),
-  //     );
-  //   } catch (e) {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(content: Text("Account creation failed: ${e.toString()}")),
-  //     );
-  //   }
-
-  //   setState(() {
-  //     _isLoading = false;
-  //   });
-  // }
+    setState(() {
+      _isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

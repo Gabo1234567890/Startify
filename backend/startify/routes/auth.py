@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from startify.schemas.user import UserCreate, UserLogin, UserResponse
 from startify.models.user import User
