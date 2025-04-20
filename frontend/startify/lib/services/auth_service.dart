@@ -24,6 +24,7 @@ class AuthService {
     );
 
     if (response.statusCode == 200) {
+      login(email, password);
       return jsonDecode(response.body);
     } else {
       throw Exception("Failed to register: ${response.body}");

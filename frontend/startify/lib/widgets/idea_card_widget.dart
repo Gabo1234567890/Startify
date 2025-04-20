@@ -4,7 +4,18 @@ import 'package:startify/pages/my_startup_page.dart';
 import 'package:startify/pages/not_my_startup_page.dart';
 
 class IdeaCardWidget extends StatelessWidget {
-  const IdeaCardWidget({super.key});
+  final String name;
+  final String description;
+  final int goalAmount;
+  final int raisedAmount;
+
+  const IdeaCardWidget({
+    super.key,
+    required this.name,
+    required this.description,
+    required this.goalAmount,
+    required this.raisedAmount,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -46,14 +57,14 @@ class IdeaCardWidget extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Idea's Name",
+                            name,
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
-                            "300\$ / 600\$",
+                            "$raisedAmount\$ / $goalAmount\$",
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -89,7 +100,7 @@ class IdeaCardWidget extends StatelessWidget {
                         SizedBox(width: 40),
                         Expanded(
                           child: Text(
-                            'Description: ......................................................',
+                            'Description: $description',
                             softWrap: true,
                             overflow: TextOverflow.visible,
                           ),

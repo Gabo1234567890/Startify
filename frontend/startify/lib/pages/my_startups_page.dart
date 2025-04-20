@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:startify/data/notifiers.dart';
+import 'package:startify/services/startup_service.dart';
 import 'package:startify/widgets/idea_card_widget.dart';
 import 'package:startify/widgets/plus_button_widget.dart';
 
@@ -9,76 +9,81 @@ class MyStartupsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        physics: ClampingScrollPhysics(),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 15),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 25.0),
-                child: Row(
-                  children: [
-                    Text(
-                      'Startups: 4',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.left,
-                    ),
-                    SizedBox(width: 175),
-                    PlusButton(),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    left: 20.0,
-                    right: 20.0,
-                    top: 5.0,
-                  ),
-                  child: SizedBox(
-                    height: 45,
-                    child: TextField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
+      body: FutureBuilder<List<Map<String, dynamic>>>(
+        future: StartupService().getMyStartups(),
+        builder: (context, snapshot) {
+          final startups = snapshot.data ?? [];
+          return SingleChildScrollView(
+            physics: ClampingScrollPhysics(),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 15),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 25.0),
+                    child: Row(
+                      children: [
+                        Text(
+                          'Startups: ${startups.length}',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.left,
                         ),
-                        hintText: 'Search Startups...',
-                        contentPadding: EdgeInsets.all(10),
+                        SizedBox(width: 175),
+                        PlusButton(),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        left: 20.0,
+                        right: 20.0,
+                        top: 5.0,
+                      ),
+                      child: SizedBox(
+                        height: 45,
+                        child: TextField(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                            hintText: 'Search Startups...',
+                            contentPadding: EdgeInsets.all(10),
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
+                  if (snapshot.connectionState == ConnectionState.waiting)
+                    Center(child: CircularProgressIndicator())
+                  else if (snapshot.hasError)
+                    Center(child: Text('Error: ${snapshot.error}'))
+                  else
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: startups.length,
+                      itemBuilder: (context, index) {
+                        final startup = startups[index];
+                        return IdeaCardWidget(
+                          name: startup['name'],
+                          description: startup['description'] ?? '',
+                          goalAmount: startup['goalAmount'] ?? 0,
+                          raisedAmount: startup['raisedAmount'] ?? 0,
+                        );
+                      },
+                    ),
+                ],
               ),
-              ValueListenableBuilder(
-                valueListenable: myIdeaNotifier,
-                builder: (context, myIdea, child) {
-                  WidgetsBinding.instance.addPostFrameCallback((_) {
-                    if (!myIdeaNotifier.value) {
-                      myIdeaNotifier.value = true;
-                    }
-                  });
-                  return ListView(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    children: [
-                      IdeaCardWidget(),
-                      IdeaCardWidget(),
-                      IdeaCardWidget(),
-                      IdeaCardWidget(),
-                    ],
-                  );
-                },
-              ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }

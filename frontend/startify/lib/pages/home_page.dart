@@ -32,10 +32,10 @@ class HomePage extends StatelessWidget {
                       children:
                           ideaSearch
                               ? [
-                                IdeaCardWidget(),
-                                IdeaCardWidget(),
-                                IdeaCardWidget(),
-                                IdeaCardWidget(),
+                                // IdeaCardWidget(),
+                                // IdeaCardWidget(),
+                                // IdeaCardWidget(),
+                                // IdeaCardWidget(),
                               ]
                               : [
                                 PersonCardWidget(),

@@ -75,10 +75,10 @@ class InvestmentsPage extends StatelessWidget {
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     children: [
-                      IdeaCardWidget(),
-                      IdeaCardWidget(),
-                      IdeaCardWidget(),
-                      IdeaCardWidget(),
+                      // IdeaCardWidget(),
+                      // IdeaCardWidget(),
+                      // IdeaCardWidget(),
+                      // IdeaCardWidget(),
                     ],
                   );
                 },
