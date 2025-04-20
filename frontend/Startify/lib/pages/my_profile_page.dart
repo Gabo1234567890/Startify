@@ -4,14 +4,14 @@ import 'package:startify/pages/create_account_page.dart';
 import 'package:startify/pages/login_page.dart';
 import 'package:startify/services/auth_service.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+class MyProfilePage extends StatefulWidget {
+  const MyProfilePage({super.key});
 
   @override
-  ProfilePageState createState() => ProfilePageState();
+  MyProfilePageState createState() => MyProfilePageState();
 }
 
-class ProfilePageState extends State<ProfilePage> {
+class MyProfilePageState extends State<MyProfilePage> {
   bool _isPasswordVisible = false;
   bool _isLoading = true;
   bool isEditingBio = false;
