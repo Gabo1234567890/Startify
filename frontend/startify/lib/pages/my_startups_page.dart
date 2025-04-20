@@ -1,10 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:startify/pages/login_page.dart';
 import 'package:startify/services/startup_service.dart';
 import 'package:startify/widgets/idea_card_widget.dart';
 import 'package:startify/widgets/plus_button_widget.dart';
 
-class MyStartupsPage extends StatelessWidget {
+class MyStartupsPage extends StatefulWidget {
   const MyStartupsPage({super.key});
+
+  @override
+  State<MyStartupsPage> createState() => _MyStartupsPageState();
+}
+
+class _MyStartupsPageState extends State<MyStartupsPage> {
+  final storage = FlutterSecureStorage();
+
+  @override
+  void initState() {
+    super.initState();
+    checkLoginStatus();
+  }
+
+  Future<void> checkLoginStatus() async {
+    final token = await storage.read(key: 'access_token');
+    if (token == null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => LoginPage()),
+        );
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,6 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
-from startify.schemas.user import UserCreate, UserLogin, UserResponse, UserProfile, ProfileUpdate
+from startify.schemas.user import UserCreate, UserLogin, UserResponse, UserProfile, ProfileUpdate, UserOut
 from startify.models.user import User
 from startify.utils.security import hash_password, verify_password, create_access_token, get_current_user
 from startify.database.connection import get_db
@@ -42,3 +42,7 @@ def update_me(update: ProfileUpdate, db: Session = Depends(get_db), current_user
     db.commit()
     db.refresh(current_user)
     return current_user
+
+@router.get("/users", response_model=list[UserOut])
+def get_users(skip: int = Query(0), limit: int = Query(10), db: Session = Depends(get_db)):
+    return db.query(User).offset(skip).limit(limit).all()

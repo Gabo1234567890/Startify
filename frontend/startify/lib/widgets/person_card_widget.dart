@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class PersonCardWidget extends StatelessWidget {
-  const PersonCardWidget({super.key});
+  final String name;
+  final String bio;
+  const PersonCardWidget({super.key, required this.name, required this.bio});
 
   @override
   Widget build(BuildContext context) {
@@ -40,14 +42,14 @@ class PersonCardWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Name',
+                        name,
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
-                        'Skils: ...........................................................................................',
+                        'About me: $bio',
                         softWrap: true,
                         overflow: TextOverflow.visible,
                       ),

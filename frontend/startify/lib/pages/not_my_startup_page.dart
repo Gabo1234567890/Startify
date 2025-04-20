@@ -89,8 +89,10 @@ class NotMyStartupPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding:
-                                  const EdgeInsets.only(right: 8.0, top: 8),
+                              padding: const EdgeInsets.only(
+                                right: 8.0,
+                                top: 8,
+                              ),
                               child: Container(
                                 width: 140,
                                 height: 200,
@@ -129,16 +131,21 @@ class NotMyStartupPage extends StatelessWidget {
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.only(
-                                        left: 10.0, top: 10),
+                                      left: 10.0,
+                                      top: 10,
+                                    ),
                                     child: Text(
                                       'Description:',
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(
-                                        left: 10.0, right: 10),
+                                      left: 10.0,
+                                      right: 10,
+                                    ),
                                     child: Text(
                                       '............................................................................................................................................................................................................................',
                                     ),
@@ -235,8 +242,8 @@ class NotMyStartupPage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  PersonCardWidget(),
-                  PersonCardWidget(),
+                  // PersonCardWidget(),
+                  // PersonCardWidget(),
                 ],
               ),
             ),

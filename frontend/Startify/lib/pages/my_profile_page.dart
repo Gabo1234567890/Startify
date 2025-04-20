@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:startify/data/notifiers.dart';
-import 'package:startify/pages/create_account_page.dart';
 import 'package:startify/pages/login_page.dart';
 import 'package:startify/services/auth_service.dart';
 
@@ -16,7 +15,7 @@ class MyProfilePageState extends State<MyProfilePage> {
   bool _isLoading = true;
   bool isEditingBio = false;
   late TextEditingController bioController;
-  Map<String, dynamic>? userData;
+  late Map<String, dynamic> userData = {};
 
   Future<void> _loadUserData() async {
     try {
@@ -25,6 +24,15 @@ class MyProfilePageState extends State<MyProfilePage> {
         userData = data;
         _isLoading = false;
       });
+
+      if (userData['username'] == "" || userData['username'] == null) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => LoginPage()),
+          );
+        });
+      }
     } catch (e) {
       print("Error fetching profile: $e");
     }
@@ -34,7 +42,7 @@ class MyProfilePageState extends State<MyProfilePage> {
   void initState() {
     super.initState();
     _loadUserData();
-    bioController = TextEditingController(text: userData?["bio"] ?? "");
+    bioController = TextEditingController(text: userData["bio"] ?? "");
     bioController.selection = TextSelection.fromPosition(
       TextPosition(offset: bioController.text.length),
     );
@@ -44,23 +52,6 @@ class MyProfilePageState extends State<MyProfilePage> {
   Widget build(BuildContext context) {
     if (_isLoading) {
       return Scaffold(body: Center(child: CircularProgressIndicator()));
-    }
-
-    if (userData == null) {
-      return Scaffold(
-        body: ElevatedButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => CreateAccountPage()),
-            );
-          },
-          style: ElevatedButton.styleFrom(
-            minimumSize: Size(double.infinity, 50),
-          ),
-          child: const Text("Create Account", style: TextStyle(fontSize: 18)),
-        ),
-      );
     }
 
     return Scaffold(
@@ -107,7 +98,7 @@ class MyProfilePageState extends State<MyProfilePage> {
                   ),
                   const SizedBox(height: 26),
                   Text(
-                    userData?["username"],
+                    userData["username"],
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
@@ -275,7 +266,7 @@ class MyProfilePageState extends State<MyProfilePage> {
                       ),
                     ],
                   ),
-                  _buildField(userData?['email'], textColor: textColor),
+                  _buildField(userData['email'], textColor: textColor),
                   const SizedBox(height: 10),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,

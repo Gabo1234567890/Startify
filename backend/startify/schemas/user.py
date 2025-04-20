@@ -28,3 +28,11 @@ class UserProfile(BaseModel):
 
 class ProfileUpdate(BaseModel):
     bio: str | None = None
+
+class UserOut(BaseModel):
+    id: UUID
+    username: str
+    bio: str | None = None
+
+    class Config:
+        orm_mode = True

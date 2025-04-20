@@ -8,22 +8,20 @@ class ContractsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBarWidgetNoLogIn(),
-        body: SingleChildScrollView(
-          physics: ClampingScrollPhysics(),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4.9),
-            child: Column(children: [
+      appBar: AppBarWidgetNoLogIn(),
+      body: SingleChildScrollView(
+        physics: ClampingScrollPhysics(),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4.9),
+          child: Column(
+            children: [
               Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: const EdgeInsets.only(top: 15.0, left: 10),
                   child: Text(
                     'Contract',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w900,
-                    ),
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900),
                   ),
                 ),
               ),
@@ -88,7 +86,7 @@ class ContractsPage extends StatelessWidget {
                   ),
                 ],
               ),
-              PersonCardWidget(),
+              // PersonCardWidget(),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
@@ -166,9 +164,11 @@ class ContractsPage extends StatelessWidget {
                   ),
                 ],
               ),
-              PersonCardWidget(),
-            ]),
+              //PersonCardWidget(),
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:startify/data/notifiers.dart';
 import 'package:startify/widget_tree.dart';
 
-class AppBarWidgetNoLogIn extends StatelessWidget implements PreferredSizeWidget {
+class AppBarWidgetNoLogIn extends StatelessWidget
+    implements PreferredSizeWidget {
   const AppBarWidgetNoLogIn({super.key});
 
   @override
@@ -12,14 +13,14 @@ class AppBarWidgetNoLogIn extends StatelessWidget implements PreferredSizeWidget
         padding: const EdgeInsets.only(left: 15.0),
         child: GestureDetector(
           onTap: () {
+            selectedPageNotifier.value = 0;
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => WidgetTree()),
             );
           },
-          child: Icon(Icons.arrow_back)
+          child: Icon(Icons.arrow_back),
         ),
-        
       ),
       title: Text('Startify', style: TextStyle(fontWeight: FontWeight.bold)),
       centerTitle: true,

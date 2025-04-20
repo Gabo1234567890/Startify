@@ -52,6 +52,9 @@ class AuthService {
 
   Future<Map<String, dynamic>> getProfile() async {
     final token = await storage.read(key: "access_token");
+    if (token == null) {
+      return {"username": "", "email": "", "bio": ""};
+    }
     final response = await http.get(
       Uri.parse("$baseUrl/me"),
       headers: {
@@ -80,6 +83,28 @@ class AuthService {
 
     if (response.statusCode != 200) {
       throw Exception("Failed to update profile: ${response.body}");
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> getUsers({
+    int skip = 0,
+    int limit = 10,
+  }) async {
+    final url = Uri.parse("$baseUrl/users?skip=$skip&limit=$limit");
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      List<dynamic> data = json.decode(response.body);
+      final loggedInUser = await getProfile();
+      if (loggedInUser["username"] != "") {
+        data =
+            data
+                .where((user) => user['username'] != loggedInUser['username'])
+                .toList();
+      }
+      return data.cast<Map<String, dynamic>>();
+    } else {
+      throw Exception('Failed to load users');
     }
   }
 }
