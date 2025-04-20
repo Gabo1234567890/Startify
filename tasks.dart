@@ -1,3 +1,4 @@
+//TODO Person cards from database
 //TODO Investments money from profile database
 //TODO Chat
 //TODO Search
