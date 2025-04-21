@@ -20,7 +20,7 @@ class _MyStartupsPageState extends State<MyStartupsPage> {
   @override
   void initState() {
     super.initState();
-    checkLoginStatus();
+    _checkLoginStatus();
     _futureMyStartups = _getMyStartups();
   }
 
@@ -35,7 +35,7 @@ class _MyStartupsPageState extends State<MyStartupsPage> {
     return StartupService().getMyStartups(search: _searchQuery);
   }
 
-  Future<void> checkLoginStatus() async {
+  Future<void> _checkLoginStatus() async {
     final token = await storage.read(key: 'access_token');
     if (token == null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
