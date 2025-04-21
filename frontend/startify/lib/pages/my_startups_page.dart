@@ -15,14 +15,28 @@ class MyStartupsPage extends StatefulWidget {
 
 class _MyStartupsPageState extends State<MyStartupsPage> {
   final storage = FlutterSecureStorage();
+  String _searchQuery = '';
+  late Future<List<Map<String, dynamic>>> _futureMyStartups;
 
   @override
   void initState() {
     super.initState();
-    checkLoginStatus();
+    _checkLoginStatus();
+    _futureMyStartups = _getMyStartups();
   }
 
-  Future<void> checkLoginStatus() async {
+  void _onSearchChanged(String value) {
+    setState(() {
+      _searchQuery = value;
+      _futureMyStartups = _getMyStartups();
+    });
+  }
+
+  Future<List<Map<String, dynamic>>> _getMyStartups() {
+    return StartupService().getMyStartups(search: _searchQuery);
+  }
+
+  Future<void> _checkLoginStatus() async {
     final token = await storage.read(key: 'access_token');
     if (token == null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -38,7 +52,7 @@ class _MyStartupsPageState extends State<MyStartupsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder<List<Map<String, dynamic>>>(
-        future: StartupService().getMyStartups(),
+        future: _futureMyStartups,
         builder: (context, snapshot) {
           final startups = snapshot.data ?? [];
           return SingleChildScrollView(
@@ -86,6 +100,7 @@ class _MyStartupsPageState extends State<MyStartupsPage> {
                       child: SizedBox(
                         height: 45,
                         child: TextField(
+                          onChanged: _onSearchChanged,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(30.0),

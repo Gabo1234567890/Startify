@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:startify/pages/login_page.dart';
+
 enum CalendarViewMode { daily, weekly, monthly }
 
 class CalendarPage extends StatefulWidget {
@@ -29,6 +32,25 @@ class CalendarPageState extends State<CalendarPage> {
     Colors.orange,
   ];
   final Random _random = Random();
+  final storage = FlutterSecureStorage();
+
+  @override
+  void initState() {
+    super.initState();
+    _checkLoginStatus();
+  }
+
+  Future<void> _checkLoginStatus() async {
+    final token = await storage.read(key: 'access_token');
+    if (token == null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => LoginPage()),
+        );
+      });
+    }
+  }
 
   void _addEvent() {
     if (_eventNameController.text.isEmpty) return;
@@ -272,7 +294,6 @@ class CalendarPageState extends State<CalendarPage> {
       case CalendarViewMode.weekly:
         return _buildWeeklyView(selectedColor, unselectedColor, textColor);
       case CalendarViewMode.monthly:
-      default:
         return _buildMonthlyView(selectedColor, unselectedColor, textColor);
     }
   }

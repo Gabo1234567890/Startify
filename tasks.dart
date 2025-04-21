@@ -1,8 +1,8 @@
-//TODO Person cards from database
+//// Person cards from database
 //TODO Investments money from profile database
 //TODO Chat
-//TODO Search
-//TODO Catalog-like
+//// Search
+//// Catalog-like
 
 //* Dependent on other's profile page
 //TODO Person Card working
