@@ -89,8 +89,11 @@ class AuthService {
   Future<List<Map<String, dynamic>>> getUsers({
     int skip = 0,
     int limit = 10,
+    String search = "",
   }) async {
-    final url = Uri.parse("$baseUrl/users?skip=$skip&limit=$limit");
+    final url = Uri.parse(
+      "$baseUrl/users?skip=$skip&limit=$limit&search=$search",
+    );
     final response = await http.get(url);
 
     if (response.statusCode == 200) {

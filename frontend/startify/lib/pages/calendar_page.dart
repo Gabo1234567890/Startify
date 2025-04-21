@@ -272,7 +272,6 @@ class CalendarPageState extends State<CalendarPage> {
       case CalendarViewMode.weekly:
         return _buildWeeklyView(selectedColor, unselectedColor, textColor);
       case CalendarViewMode.monthly:
-      default:
         return _buildMonthlyView(selectedColor, unselectedColor, textColor);
     }
   }

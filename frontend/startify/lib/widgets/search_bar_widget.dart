@@ -1,8 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:startify/data/notifiers.dart';
 
-class SearchBarWidget extends StatelessWidget {
-  const SearchBarWidget({super.key});
+class SearchBarWidget extends StatefulWidget {
+  final Function(String) onChanged;
+
+  const SearchBarWidget({super.key, required this.onChanged});
+
+  @override
+  State<SearchBarWidget> createState() => _SearchBarWidgetState();
+}
+
+class _SearchBarWidgetState extends State<SearchBarWidget> {
+  late TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +39,8 @@ class SearchBarWidget extends StatelessWidget {
                 child: SizedBox(
                   height: 45,
                   child: TextField(
+                    controller: _controller,
+                    onChanged: widget.onChanged,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0),

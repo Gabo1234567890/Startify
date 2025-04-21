@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'auth_service.dart';
 
 class StartupService {
   final String baseUrl = "http://10.0.2.2:8000";
@@ -26,6 +27,31 @@ class StartupService {
       return decoded.cast<Map<String, dynamic>>();
     } else {
       throw Exception("Failed to load startups");
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> getStartups({
+    int skip = 0,
+    int limit = 10,
+    String search = "",
+  }) async {
+    final url = Uri.parse(
+      "$baseUrl/startups?skip=$skip&limit=$limit&search=$search",
+    );
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      List<dynamic> data = json.decode(response.body);
+      final loggedInUser = await AuthService().getProfile();
+      if (loggedInUser["username"] != "") {
+        data =
+            data
+                .where((startup) => startup['owner_id'] != loggedInUser['id'])
+                .toList();
+      }
+      return data.cast<Map<String, dynamic>>();
+    } else {
+      throw Exception('Failed to load startups');
     }
   }
 }
