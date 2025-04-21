@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:startify/pages/person_page.dart';
 
 class PersonCardWidget extends StatelessWidget {
   final String name;
   final String bio;
+
   const PersonCardWidget({super.key, required this.name, required this.bio});
 
   @override
@@ -13,7 +15,14 @@ class PersonCardWidget extends StatelessWidget {
         width: 383,
         height: 111,
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PersonPage(name: name, bio: bio),
+              ),
+            );
+          },
           style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(60),

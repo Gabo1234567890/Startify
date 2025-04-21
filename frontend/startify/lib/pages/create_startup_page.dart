@@ -63,6 +63,7 @@ class _CreateStartupPageState extends State<CreateStartupPage> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
+          physics: ClampingScrollPhysics(),
           // wrapped in scroll view just in case
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
