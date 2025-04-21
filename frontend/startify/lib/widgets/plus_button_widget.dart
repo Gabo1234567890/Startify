@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class PlusButton extends StatelessWidget {
-  const PlusButton({super.key});
+  final VoidCallback onPressed;
+  const PlusButton({super.key, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class PlusButton extends StatelessWidget {
           ),
           padding: const EdgeInsets.symmetric(horizontal: 16),
         ),
-        onPressed: () {},
+        onPressed: onPressed,
         child: Center(
           child: Row(
             mainAxisSize: MainAxisSize.min,

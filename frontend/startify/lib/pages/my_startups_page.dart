@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:startify/pages/create_startup_page.dart';
 import 'package:startify/pages/login_page.dart';
 import 'package:startify/services/startup_service.dart';
 import 'package:startify/widgets/idea_card_widget.dart';
@@ -61,7 +62,16 @@ class _MyStartupsPageState extends State<MyStartupsPage> {
                           textAlign: TextAlign.left,
                         ),
                         SizedBox(width: 175),
-                        PlusButton(),
+                        PlusButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CreateStartupPage(),
+                              ),
+                            );
+                          },
+                        ),
                       ],
                     ),
                   ),

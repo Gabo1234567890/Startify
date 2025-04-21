@@ -68,7 +68,7 @@ class NotMyStartupPage extends StatelessWidget {
                             ),
                             Align(
                               alignment: Alignment.centerRight,
-                              child: PlusButton(),
+                              // child: PlusButton(),
                             ),
                           ],
                         ),
