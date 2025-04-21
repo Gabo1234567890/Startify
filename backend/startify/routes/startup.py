@@ -8,9 +8,16 @@ from startify.utils.security import get_current_user
 
 router = APIRouter()
 
-@router.get("/my", response_model=list[StartupResponse])
-def get_my_startups(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
-    return db.query(Startup).filter(Startup.user_id == current_user.id).all()
+@router.get("/startups/my", response_model=list[StartupResponse])
+def get_my_startups(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+    search: str = Query("", description="Search by name")
+):
+    query = db.query(Startup).filter(Startup.user_id == current_user.id)
+    if search:
+        query = query.filter(Startup.name.ilike(f"%{search}%"))
+    return query.all()
 
 @router.get("/startups", response_model=list[StartupResponse])
 def get_users(

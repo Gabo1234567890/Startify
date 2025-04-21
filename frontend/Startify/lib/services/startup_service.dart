@@ -7,7 +7,7 @@ class StartupService {
   final String baseUrl = "http://10.0.2.2:8000";
   final storage = FlutterSecureStorage();
 
-  Future<List<Map<String, dynamic>>> getMyStartups() async {
+  Future<List<Map<String, dynamic>>> getMyStartups({String search = ""}) async {
     final token = await storage.read(key: 'access_token');
 
     if (token == null) {
@@ -15,7 +15,7 @@ class StartupService {
     }
 
     final response = await http.get(
-      Uri.parse('$baseUrl/startups/my'),
+      Uri.parse('$baseUrl/startups/my?search=$search'),
       headers: {
         "Authorization": "Bearer $token",
         "Content-Type": "application/json",
