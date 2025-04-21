@@ -73,12 +73,8 @@ class MyProfilePageState extends State<MyProfilePage> {
                       children: [
                         CircleAvatar(
                           radius: 100,
-                          backgroundImage: AssetImage(
-                            "lib/assets/avatar2.png", //! Get from backend via REST
-                          ),
+                          backgroundImage: AssetImage("lib/assets/avatar2.png"),
                         ),
-
-                        //* Edit Profile Picture Button
                         Positioned(
                           bottom: 5,
                           left: 5,
@@ -87,9 +83,7 @@ class MyProfilePageState extends State<MyProfilePage> {
                             backgroundColor: containerColor,
                             child: IconButton(
                               icon: Icon(Icons.edit, color: iconColor),
-                              onPressed: () {
-                                //! Handle profile picture change
-                              },
+                              onPressed: () {},
                             ),
                           ),
                         ),
@@ -229,10 +223,8 @@ class MyProfilePageState extends State<MyProfilePage> {
                         decoration: BoxDecoration(
                           color: containerColor,
                           borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(20), // Round top-right
-                            bottomRight: Radius.circular(
-                              20,
-                            ), // Round bottom-right
+                            topRight: Radius.circular(20),
+                            bottomRight: Radius.circular(20),
                           ),
                         ),
                         child: Row(
@@ -277,10 +269,8 @@ class MyProfilePageState extends State<MyProfilePage> {
                         decoration: BoxDecoration(
                           color: containerColor,
                           borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(20), // Round top-right
-                            bottomRight: Radius.circular(
-                              20,
-                            ), // Round bottom-right
+                            topRight: Radius.circular(20),
+                            bottomRight: Radius.circular(20),
                           ),
                         ),
                         child: Row(
@@ -330,10 +320,7 @@ class MyProfilePageState extends State<MyProfilePage> {
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
       child: Text(
         value,
-        style: TextStyle(
-          fontSize: 16,
-          color: textColor.withValues(alpha: 0.7), // Slightly transparent text
-        ),
+        style: TextStyle(fontSize: 16, color: textColor.withValues(alpha: 0.7)),
       ),
     );
   }
@@ -349,9 +336,7 @@ class MyProfilePageState extends State<MyProfilePage> {
             _isPasswordVisible ? password : "•" * password.length,
             style: TextStyle(
               fontSize: 16,
-              color: textColor.withValues(
-                alpha: 0.7,
-              ), // Slightly transparent text
+              color: textColor.withValues(alpha: 0.7),
             ),
           ),
           IconButton(
