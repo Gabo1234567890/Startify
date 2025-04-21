@@ -48,6 +48,13 @@ class _CreateStartupPageState extends State<CreateStartupPage> {
     }
   }
 
+  final List<String> _statusOptions = [
+    "Sole Trader",
+    "Limited Liability Company (LLC)",
+    "Joint-stock Company (JSC)",
+  ];
+  String _selectedStatus = "Sole Trader";
+
   @override
   void dispose() {
     _controller.dispose();
@@ -190,7 +197,27 @@ class _CreateStartupPageState extends State<CreateStartupPage> {
                   ),
                 ],
               ),
-              SizedBox(height: 20),
+              Text(
+                "Desired startup status:",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              DropdownButton<String>(
+                value: _selectedStatus,
+                isExpanded: true,
+                items:
+                    _statusOptions.map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    _selectedStatus = newValue!;
+                  });
+                },
+              ),
+              SizedBox(height: 30),
               Row(
                 children: [
                   Text(
