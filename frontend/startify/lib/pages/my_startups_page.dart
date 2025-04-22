@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:startify/pages/create_startup_page.dart';
 import 'package:startify/pages/login_page.dart';
 import 'package:startify/services/startup_service.dart';
 import 'package:startify/widgets/idea_card_widget.dart';
@@ -27,7 +28,8 @@ class _MyStartupsPageState extends State<MyStartupsPage> {
   void _onSearchChanged(String value) {
     setState(() {
       _searchQuery = value;
-      _futureMyStartups = _getMyStartups();
+      _futureMyStartups =
+          _getMyStartups(); // Reset the future with the updated search query
     });
   }
 
@@ -39,7 +41,7 @@ class _MyStartupsPageState extends State<MyStartupsPage> {
     final token = await storage.read(key: 'access_token');
     if (token == null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => LoginPage()),
         );
@@ -75,7 +77,16 @@ class _MyStartupsPageState extends State<MyStartupsPage> {
                           textAlign: TextAlign.left,
                         ),
                         SizedBox(width: 175),
-                        PlusButton(),
+                        PlusButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CreateStartupPage(),
+                              ),
+                            );
+                          },
+                        ),
                       ],
                     ),
                   ),
@@ -102,10 +113,13 @@ class _MyStartupsPageState extends State<MyStartupsPage> {
                       ),
                     ),
                   ),
+                  // Show a progress indicator while loading
                   if (snapshot.connectionState == ConnectionState.waiting)
                     Center(child: CircularProgressIndicator())
                   else if (snapshot.hasError)
                     Center(child: Text('Error: ${snapshot.error}'))
+                  else if (startups.isEmpty)
+                    Center(child: Text('No startups found'))
                   else
                     ListView.builder(
                       shrinkWrap: true,
