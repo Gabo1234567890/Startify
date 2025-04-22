@@ -21,7 +21,25 @@ class ChatService {
       final List<dynamic> data = json.decode(response.body);
       return data.cast<Map<String, dynamic>>();
     } else {
-      throw Exception("Failed to load chats");
+      throw Exception("Failed to load chats: ${response.body}");
+    }
+  }
+
+  Future<Map<String, dynamic>> createChat(String userId) async {
+    final token = await _getToken();
+    final response = await http.post(
+      Uri.parse("$baseUrl/chats"),
+      headers: {
+        "Authorization": "Bearer $token",
+        "Content-Type": "application/json",
+      },
+      body: json.encode({"user_id": userId}),
+    );
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return json.decode(response.body);
+    } else {
+      throw Exception("Failed to create chat: ${response.body}");
     }
   }
 
@@ -36,7 +54,7 @@ class ChatService {
       final List<dynamic> data = json.decode(response.body);
       return data.cast<Map<String, dynamic>>();
     } else {
-      throw Exception("Failed to load messages");
+      throw Exception("Failed to load messages: ${response.body}");
     }
   }
 
@@ -57,7 +75,7 @@ class ChatService {
     if (response.statusCode == 200 || response.statusCode == 201) {
       return json.decode(response.body) as Map<String, dynamic>;
     } else {
-      throw Exception("Failed to send message");
+      throw Exception("Failed to send message: ${response.body}");
     }
   }
 }

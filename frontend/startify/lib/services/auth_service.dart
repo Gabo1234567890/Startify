@@ -24,7 +24,7 @@ class AuthService {
     );
 
     if (response.statusCode == 200) {
-      login(email, password);
+      await login(email, password);
       return jsonDecode(response.body);
     } else {
       throw Exception("Failed to register: ${response.body}");
@@ -44,6 +44,7 @@ class AuthService {
       final data = jsonDecode(response.body);
       final accessToken = data["access_token"];
       await storage.write(key: "access_token", value: accessToken);
+      await storage.write(key: "user_id", value: data["id"]);
       return data;
     } else {
       throw Exception("Failed to login: ${response.body}");
@@ -90,6 +91,7 @@ class AuthService {
     int skip = 0,
     int limit = 10,
     String search = "",
+    bool withCurrent = false,
   }) async {
     final url = Uri.parse(
       "$baseUrl/users?skip=$skip&limit=$limit&search=$search",
@@ -99,7 +101,7 @@ class AuthService {
     if (response.statusCode == 200) {
       List<dynamic> data = json.decode(response.body);
       final loggedInUser = await getProfile();
-      if (loggedInUser["username"] != "") {
+      if (loggedInUser["username"] != "" && !withCurrent) {
         data =
             data
                 .where((user) => user['username'] != loggedInUser['username'])

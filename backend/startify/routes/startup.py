@@ -20,7 +20,7 @@ def get_my_startups(
     return query.all()
 
 @router.get("/startups", response_model=list[StartupResponse])
-def get_users(
+def get_startups(
     skip: int = Query(0),
     limit: int = Query(10),
     search: str = Query("", description="Search by name"),

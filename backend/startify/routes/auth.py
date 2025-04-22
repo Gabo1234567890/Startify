@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from startify.schemas.user import UserCreate, UserLogin, UserResponse
+from startify.schemas.user import UserCreate, UserLogin, UserResponse, LoginResponse
 from startify.models.user import User
 from startify.utils.security import hash_password, verify_password, create_access_token
 from startify.database.connection import get_db
@@ -22,11 +22,11 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
     db.refresh(new_user)
     return new_user
 
-@router.post("/login")
+@router.post("/login", response_model=LoginResponse)
 def login(user: UserLogin, db: Session = Depends(get_db)):
     db_user = db.query(User).filter(User.email == user.email).first()
     if not db_user or not verify_password(user.password, db_user.hashed_password):
         raise HTTPException(status_code=401, detail="Invalid credentials")
     
     access_token = create_access_token(data={"username": db_user.username})
-    return {"access_token": access_token, "token_type": "bearer"}
+    return {"access_token": access_token, "token_type": "bearer", "id": db_user.id, "username": db_user.username, "email": db_user.email}

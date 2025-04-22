@@ -11,7 +11,7 @@ class Message(Base):
     chat_id = Column(UUID(as_uuid=True), ForeignKey('chats.id'))
     sender_id = Column(UUID(as_uuid=True), ForeignKey('users.id'))
     content = Column(String, nullable=False)
-    timestamp = Column(DateTime, default=datetime.now(timezone.utc))
+    timestamp = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
 
     chat = relationship('Chat', back_populates='messages')
     sender = relationship('User', back_populates='sent_messages', foreign_keys=[sender_id])

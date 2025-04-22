@@ -10,3 +10,6 @@ class ChatResponse(BaseModel):
 
     class Config:
         orm_mode = True
+
+class CreateChatRequest(BaseModel):
+    user_id: UUID

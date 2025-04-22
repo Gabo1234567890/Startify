@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:startify/pages/login_page.dart';
+import 'package:startify/services/auth_service.dart';
 import 'package:startify/services/chat_service.dart';
 import 'package:startify/widgets/chat_card_widget.dart';
 
@@ -12,6 +13,7 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
+  String? _currentUserId;
   late Future<List<Map<String, dynamic>>> _chats;
   final storage = FlutterSecureStorage();
   String _searchQuery = '';
@@ -25,12 +27,18 @@ class _ChatPageState extends State<ChatPage> {
 
   Future<void> _checkLoginStatus() async {
     final token = await storage.read(key: 'access_token');
-    if (token == null) {
+    final userId = await storage.read(key: 'user_id');
+    print(userId);
+    if (token == null || userId == null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => LoginPage()),
         );
+      });
+    } else {
+      setState(() {
+        _currentUserId = userId;
       });
     }
   }
@@ -57,7 +65,7 @@ class _ChatPageState extends State<ChatPage> {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No chats available'));
+            return Center(child: Text('No chats found'));
           }
 
           final chats = snapshot.data!;
@@ -92,13 +100,26 @@ class _ChatPageState extends State<ChatPage> {
                   ),
                 ),
                 ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
                   itemCount: chats.length,
                   itemBuilder: (context, index) {
                     final chat = chats[index];
-                    return ChatCardWidget(
-                      chatId: chat['id'],
-                      name: chat['user1_name'],
-                      lastMessage: chat['last_message'],
+                    return FutureBuilder<String>(
+                      future: getOtherUserName(chat, _currentUserId),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        } else if (snapshot.hasError) {
+                          return Text("Error: ${snapshot.error}");
+                        } else {
+                          return ChatCardWidget(
+                            chatId: chat['id'],
+                            name: snapshot.data!,
+                          );
+                        }
+                      },
                     );
                   },
                 ),
@@ -109,4 +130,14 @@ class _ChatPageState extends State<ChatPage> {
       ),
     );
   }
+}
+
+Future<String> getOtherUserName(
+  Map<String, dynamic> chat,
+  String? currentUserId,
+) async {
+  final otherUserId =
+      chat['user1_id'] == currentUserId ? chat['user2_id'] : chat['user1_id'];
+  final allUsers = await AuthService().getUsers(withCurrent: true);
+  return allUsers.firstWhere((u) => u['id'] == otherUserId)['username'];
 }

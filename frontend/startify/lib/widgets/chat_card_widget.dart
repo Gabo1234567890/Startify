@@ -4,13 +4,13 @@ import 'package:startify/pages/dm_page.dart';
 class ChatCardWidget extends StatelessWidget {
   final String chatId;
   final String name;
-  final String lastMessage;
+  // final String lastMessage;
 
   const ChatCardWidget({
     super.key,
     required this.chatId,
     required this.name,
-    required this.lastMessage,
+    // required this.lastMessage,
   });
 
   @override
@@ -36,11 +36,11 @@ class ChatCardWidget extends StatelessWidget {
               radius: 35,
             ),
             title: Text(name, style: TextStyle(fontWeight: FontWeight.bold)),
-            subtitle: Text(
-              lastMessage,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
+            // subtitle: Text(
+            //   lastMessage,
+            //   maxLines: 1,
+            //   overflow: TextOverflow.ellipsis,
+            // ),
             trailing: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [

@@ -16,11 +16,36 @@ class DmPage extends StatefulWidget {
 
 class _DmPageState extends State<DmPage> {
   late Future<List<Map<String, dynamic>>> _messages;
+  final TextEditingController _messageController = TextEditingController();
+  bool _isSending = false;
 
   @override
   void initState() {
     super.initState();
     _messages = ChatService().getMessages(widget.chatId);
+  }
+
+  Future<void> _sendMessage() async {
+    final content = _messageController.text.trim();
+    if (content.isEmpty || _isSending) {
+      return;
+    }
+    setState(() => _isSending = true);
+
+    try {
+      await ChatService().sendMessage(widget.chatId, content);
+      _messageController.clear();
+      setState(() {
+        _messages = ChatService().getMessages(widget.chatId);
+      });
+    } catch (e) {
+      print("Error sending message: $e");
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Failed to send message: $e")));
+    } finally {
+      setState(() => _isSending = false);
+    }
   }
 
   @override
@@ -95,6 +120,7 @@ class _DmPageState extends State<DmPage> {
                   child: SizedBox(
                     height: 45,
                     child: TextField(
+                      controller: _messageController,
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.all(10),
                         hintText: "Type a message...",
@@ -105,12 +131,7 @@ class _DmPageState extends State<DmPage> {
                     ),
                   ),
                 ),
-                IconButton(
-                  icon: Icon(Icons.send),
-                  onPressed: () {
-                    // Handle sending message
-                  },
-                ),
+                IconButton(icon: Icon(Icons.send), onPressed: _sendMessage),
               ],
             ),
           ),
@@ -122,7 +143,14 @@ class _DmPageState extends State<DmPage> {
 
 Future<bool> isSentByMe(message) async {
   final currentUser = await AuthService().getProfile();
-  final allUsers = await AuthService().getUsers();
+  final allUsers = await AuthService().getUsers(withCurrent: true);
+  late final id;
+  for (dynamic element in allUsers) {
+    if (element['username'] == currentUser['username']) {
+      id = element['id'];
+      break;
+    }
+  }
 
-  return message['sender_id'] == allUsers[currentUser['username']]['id'];
+  return message['sender_id'] == id;
 }

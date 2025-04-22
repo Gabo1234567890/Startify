@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:startify/pages/dm_page.dart';
+import 'package:startify/services/auth_service.dart';
+import 'package:startify/services/chat_service.dart';
 import 'package:startify/widgets/app_bar_widget_nologin.dart';
 import 'package:startify/widgets/idea_card_widget.dart';
 
@@ -26,11 +28,31 @@ class PersonPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     IconButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => DmPage()),
-                        );
+                      onPressed: () async {
+                        try {
+                          final allUsers = await AuthService().getUsers();
+                          late final id;
+                          for (dynamic element in allUsers) {
+                            if (element['username'] == name) {
+                              id = element['id'];
+                              break;
+                            }
+                          }
+                          final chat = await ChatService().createChat(id);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder:
+                                  (context) =>
+                                      DmPage(chatId: chat['id'], name: name),
+                            ),
+                          );
+                        } catch (e) {
+                          print("Error starting chat: $e");
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("Failed to start chat: $e")),
+                          );
+                        }
                       },
                       icon: Icon(Icons.chat_outlined, size: 60),
                     ),
