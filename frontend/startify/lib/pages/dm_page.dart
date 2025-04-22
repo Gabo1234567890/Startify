@@ -1,39 +1,75 @@
 import 'package:flutter/material.dart';
+import 'package:startify/services/auth_service.dart';
+import 'package:startify/services/chat_service.dart';
 import 'package:startify/widgets/app_bar_chat_widget.dart';
 import 'package:startify/widgets/chat_bubble_widget.dart';
 
-class DmPage extends StatelessWidget {
-  const DmPage({super.key});
+class DmPage extends StatefulWidget {
+  final String chatId;
+  final String name;
+
+  const DmPage({super.key, required this.chatId, required this.name});
+
+  @override
+  State<DmPage> createState() => _DmPageState();
+}
+
+class _DmPageState extends State<DmPage> {
+  late Future<List<Map<String, dynamic>>> _messages;
+
+  @override
+  void initState() {
+    super.initState();
+    _messages = ChatService().getMessages(widget.chatId);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarChatWidget(),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView(
-              reverse: true,
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              children:
-                  const [
-                    ChatBubbleWidget(message: "Hello!", isSentByMe: false),
-                    ChatBubbleWidget(
-                      message: "Hey! How are you?",
-                      isSentByMe: true,
-                    ),
-                    ChatBubbleWidget(
-                      message: "I'm good, what about you?",
-                      isSentByMe: false,
-                    ),
-                    ChatBubbleWidget(
-                      message: "Doing great! Working on my HackTues11 project.",
-                      isSentByMe: true,
-                    ),
-                  ].reversed.toList(),
-            ),
-          ),
-        ],
+      appBar: AppBarChatWidget(name: widget.name),
+      body: FutureBuilder<List<Map<String, dynamic>>>(
+        future: _messages,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return Center(child: Text('No messages'));
+          }
+
+          final messages = snapshot.data!;
+          return Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  reverse: true,
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  itemCount: messages.length,
+                  itemBuilder: (context, index) {
+                    final message = messages[index];
+                    return FutureBuilder<bool>(
+                      future: isSentByMe(message),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        } else if (snapshot.hasError) {
+                          return Text("Error: ${snapshot.error}");
+                        } else {
+                          return ChatBubbleWidget(
+                            message: message['content'],
+                            isSentByMe: snapshot.data!,
+                          );
+                        }
+                      },
+                    );
+                  },
+                ),
+              ),
+            ],
+          );
+        },
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(left: 4, right: 4, bottom: 8),
@@ -82,4 +118,11 @@ class DmPage extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<bool> isSentByMe(message) async {
+  final currentUser = await AuthService().getProfile();
+  final allUsers = await AuthService().getUsers();
+
+  return message['sender_id'] == allUsers[currentUser['username']]['id'];
 }

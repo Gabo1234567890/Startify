@@ -3,7 +3,9 @@ import 'package:startify/data/notifiers.dart';
 import 'package:startify/widget_tree.dart';
 
 class AppBarChatWidget extends StatelessWidget implements PreferredSizeWidget {
-  const AppBarChatWidget({super.key});
+  final String name;
+
+  const AppBarChatWidget({super.key, required this.name});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class AppBarChatWidget extends StatelessWidget implements PreferredSizeWidget {
       ),
       title: Column(
         children: [
-          Text('Name', style: TextStyle(fontWeight: FontWeight.bold)),
+          Text(name, style: TextStyle(fontWeight: FontWeight.bold)),
           Text('Specialization', style: TextStyle(fontSize: 12)),
         ],
       ),

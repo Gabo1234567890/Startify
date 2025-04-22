@@ -2,7 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:startify/pages/dm_page.dart';
 
 class ChatCardWidget extends StatelessWidget {
-  const ChatCardWidget({super.key});
+  final String chatId;
+  final String name;
+  final String lastMessage;
+
+  const ChatCardWidget({
+    super.key,
+    required this.chatId,
+    required this.name,
+    required this.lastMessage,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +26,7 @@ class ChatCardWidget extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return DmPage();
+                    return DmPage(chatId: chatId, name: name);
                   },
                 ),
               );
@@ -26,9 +35,9 @@ class ChatCardWidget extends StatelessWidget {
               backgroundImage: AssetImage('lib/assets/avatar2.png'),
               radius: 35,
             ),
-            title: Text('Name', style: TextStyle(fontWeight: FontWeight.bold)),
+            title: Text(name, style: TextStyle(fontWeight: FontWeight.bold)),
             subtitle: Text(
-              'Last message • 19:03',
+              lastMessage,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
