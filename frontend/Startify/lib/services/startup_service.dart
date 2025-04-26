@@ -83,4 +83,14 @@ class StartupService {
       throw Exception("Failed to create startup ${response.body}");
     }
   }
+
+  Future<Map<String, dynamic>> getStartup({required String startupId}) async {
+    final response = await http.get(Uri.parse("$baseUrl/startups/$startupId"));
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception("Failed to get startup ${response.body}");
+    }
+  }
 }

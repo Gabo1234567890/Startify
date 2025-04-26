@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:startify/data/notifiers.dart';
 import 'package:startify/pages/create_startup_page.dart';
 import 'package:startify/pages/login_page.dart';
 import 'package:startify/services/startup_service.dart';
@@ -23,6 +24,7 @@ class _MyStartupsPageState extends State<MyStartupsPage> {
     super.initState();
     _checkLoginStatus();
     _futureMyStartups = _getMyStartups();
+    myIdeaNotifier.value = true;
   }
 
   void _onSearchChanged(String value) {
@@ -88,12 +90,6 @@ class _MyStartupsPageState extends State<MyStartupsPage> {
                               _futureMyStartups = _getMyStartups();
                               setState(() {});
                             }
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) => CreateStartupPage(),
-                            //   ),
-                            // );
                           },
                         ),
                       ],
@@ -141,6 +137,7 @@ class _MyStartupsPageState extends State<MyStartupsPage> {
                           description: startup['description'] ?? '',
                           goalAmount: startup['goalAmount'] ?? 0,
                           raisedAmount: startup['raisedAmount'] ?? 0,
+                          startupId: startup['id'],
                         );
                       },
                     ),

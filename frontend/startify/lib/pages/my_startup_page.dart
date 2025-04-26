@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:startify/pages/contracts_page.dart';
+import 'package:startify/services/startup_service.dart';
 import 'package:startify/widgets/app_bar_widget_nologin.dart';
 import 'package:startify/widgets/plus_button_widget.dart';
 import 'package:startify/widgets/edit_button_widget.dart';
 
 class MyStartupPage extends StatefulWidget {
-  const MyStartupPage({super.key});
+  final String startupId;
+  const MyStartupPage({super.key, required this.startupId});
 
   @override
   State<MyStartupPage> createState() => _MyStartupPageState();
@@ -15,6 +17,17 @@ class MyStartupPage extends StatefulWidget {
 
 class _MyStartupPageState extends State<MyStartupPage> {
   File? _pickedImage;
+  late Future<Map<String, dynamic>> _startupData;
+
+  @override
+  void initState() {
+    super.initState();
+    _startupData = _getStartupData();
+  }
+
+  Future<Map<String, dynamic>> _getStartupData() {
+    return StartupService().getStartup(startupId: widget.startupId);
+  }
 
   Future<void> _pickImage() async {
     final ImagePicker picker = ImagePicker();
@@ -31,108 +44,126 @@ class _MyStartupPageState extends State<MyStartupPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarWidgetNoLogIn(),
-      body: SingleChildScrollView(
-        physics: const ClampingScrollPhysics(),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 4.9),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Header Row
-              Row(
+      body: FutureBuilder<Map<String, dynamic>>(
+        future: _startupData,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          }
+
+          final startup = snapshot.data!;
+          return SingleChildScrollView(
+            physics: const ClampingScrollPhysics(),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4.9),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.only(left: 8, right: 8, top: 8),
-                    child: Text(
-                      "STARTUP'S NAME",
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
+                  Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 8, right: 8, top: 8),
+                        child: Text(
+                          startup['name'] ?? "STARTUP'S NAME",
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      const Spacer(),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 0),
+                        child: PlusButton(onPressed: _pickImage),
+                      ),
+                    ],
+                  ),
+
+                  // Contract Button
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10.0),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const ContractsPage(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        "${startup["raised_amount"] ?? 0}\$ / ${startup["goal_amount"] ?? 0}\$",
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 100),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 0),
-                    child: PlusButton(onPressed: _pickImage),
-                  ),
-                ],
-              ),
 
-              // Contract Button
-              Padding(
-                padding: const EdgeInsets.only(bottom: 10.0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (_) => const ContractsPage()),
-                    );
-                  },
-                  child: const Text(
-                    "300\$ / 600\$",
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-
-              // Images Grid
-              Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  // Images Grid
+                  Column(
                     children: [
-                      _buildImageBox(_pickedImage),
-                      _buildImageBox(null),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          _buildImageBox(_pickedImage),
+                          _buildImageBox(null),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [_buildImageBox(null)],
+                      ),
                     ],
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [_buildImageBox(null)],
-                  ),
-                ],
-              ),
 
-              // Description
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: Column(
-                  children: [
-                    Row(
+                  // Description
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Padding(
-                          padding: EdgeInsets.only(top: 30),
-                          child: Text(
-                            "DESCRIPTION",
-                            style: TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
+                        Row(
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.only(top: 30),
+                              child: Text(
+                                "DESCRIPTION",
+                                style: TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
-                          ),
+                            const SizedBox(width: 180),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 20.0),
+                              child: EditButtonWidget(),
+                            ),
+                          ],
                         ),
-                        const SizedBox(width: 180),
                         Padding(
-                          padding: const EdgeInsets.only(top: 20.0),
-                          child: EditButtonWidget(),
+                          padding: EdgeInsets.only(top: 8),
+                          child: Text(
+                            textAlign: TextAlign.left,
+                            startup["description"] ?? "No description.",
+                          ),
                         ),
                       ],
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(top: 8),
-                      child: Text(
-                        'Mobile application that connects entrepreneurs and investors.',
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+                  ),
 
-              // Documents Section
-              _buildDocumentSection("1. Document's name"),
-              _buildDocumentSection("2. Document's name"),
-            ],
-          ),
-        ),
+                  // Documents Section
+                  _buildDocumentSection("1. Document's name"),
+                  _buildDocumentSection("2. Document's name"),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }

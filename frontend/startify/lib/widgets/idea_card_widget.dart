@@ -8,6 +8,7 @@ class IdeaCardWidget extends StatelessWidget {
   final String description;
   final int goalAmount;
   final int raisedAmount;
+  final String startupId;
 
   const IdeaCardWidget({
     super.key,
@@ -15,6 +16,7 @@ class IdeaCardWidget extends StatelessWidget {
     required this.description,
     required this.goalAmount,
     required this.raisedAmount,
+    required this.startupId,
   });
 
   @override
@@ -33,7 +35,9 @@ class IdeaCardWidget extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return myIdea ? MyStartupPage() : NotMyStartupPage();
+                      return myIdea
+                          ? MyStartupPage(startupId: startupId)
+                          : NotMyStartupPage();
                     },
                   ),
                 );

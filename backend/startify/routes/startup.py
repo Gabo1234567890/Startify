@@ -1,10 +1,11 @@
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, Query, HTTPException
 from sqlalchemy.orm import Session
 from startify.database.connection import get_db
 from startify.models.user import User
 from startify.models.startup import Startup
 from startify.schemas.startup import StartupResponse, StartupCreate
 from startify.utils.security import get_current_user
+from uuid import UUID
 
 router = APIRouter()
 
@@ -45,3 +46,10 @@ def create_startup(startup: StartupCreate, db: Session = Depends(get_db), curren
     db.commit()
     db.refresh(new_startup)
     return new_startup
+
+@router.get("/startups/{startup_id}", response_model=StartupResponse)
+def get_startup(startup_id: UUID, db: Session = Depends(get_db)):
+    startup = db.query(Startup).filter(Startup.id == startup_id).first()
+    if not startup:
+        raise HTTPException(status_code=404, detail="Startup not found")
+    return startup

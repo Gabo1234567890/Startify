@@ -95,8 +95,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // body: SingleChildScrollView(
-      //   physics: ClampingScrollPhysics(),
       body: Column(
         children: [
           SearchBarWidget(onChanged: _onSearchChanged),
@@ -118,6 +116,7 @@ class _HomePageState extends State<HomePage> {
                         description: item['description'] ?? 'No description',
                         goalAmount: item['goal_amount'],
                         raisedAmount: item['raised_amount'],
+                        startupId: "",
                       );
                     } else {
                       return PersonCardWidget(
@@ -132,7 +131,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      // ),
     );
   }
 }
