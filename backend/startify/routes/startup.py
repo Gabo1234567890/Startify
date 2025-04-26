@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from startify.database.connection import get_db
 from startify.models.user import User
 from startify.models.startup import Startup
-from startify.schemas.startup import StartupResponse
+from startify.schemas.startup import StartupResponse, StartupCreate
 from startify.utils.security import get_current_user
 
 router = APIRouter()
@@ -31,3 +31,17 @@ def get_startups(
     if search:
         query = query.filter(Startup.name.ilike(f"%{search}%"))
     return query.offset(skip).limit(limit).all()
+
+
+@router.post("/startups", response_model=StartupResponse)
+def create_startup(startup: StartupCreate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    new_startup = Startup(
+        user_id=current_user.id,
+        name=startup.name,
+        description=startup.description,
+        goal_amount=startup.goal_amount
+    )
+    db.add(new_startup)
+    db.commit()
+    db.refresh(new_startup)
+    return new_startup

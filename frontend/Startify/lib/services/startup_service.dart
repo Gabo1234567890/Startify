@@ -54,4 +54,33 @@ class StartupService {
       throw Exception('Failed to load startups');
     }
   }
+
+  Future<void> createStartup({
+    required String name,
+    required String description,
+    required int goalAmount,
+  }) async {
+    final token = await storage.read(key: 'access_token');
+
+    if (token == null) {
+      throw Exception('Access token not found');
+    }
+
+    final response = await http.post(
+      Uri.parse('$baseUrl/startups'),
+      headers: {
+        "Authorization": "Bearer $token",
+        "Content-Type": "application/json",
+      },
+      body: jsonEncode({
+        "name": name,
+        "description": description,
+        "goal_amount": goalAmount,
+      }),
+    );
+
+    if (response.statusCode != 200 && response.statusCode != 201) {
+      throw Exception("Failed to create startup ${response.body}");
+    }
+  }
 }

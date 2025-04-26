@@ -14,6 +14,6 @@ class Startup(Base):
     description = Column(Text)
     goal_amount = Column(Integer)
     raised_amount = Column(Integer, default=0)
-    created_at = Column(DateTime, default=datetime.now(timezone.utc))
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
     owner = relationship("User", back_populates="startups")

@@ -28,8 +28,7 @@ class _MyStartupsPageState extends State<MyStartupsPage> {
   void _onSearchChanged(String value) {
     setState(() {
       _searchQuery = value;
-      _futureMyStartups =
-          _getMyStartups(); // Reset the future with the updated search query
+      _futureMyStartups = _getMyStartups();
     });
   }
 
@@ -78,13 +77,23 @@ class _MyStartupsPageState extends State<MyStartupsPage> {
                         ),
                         SizedBox(width: 175),
                         PlusButton(
-                          onPressed: () {
-                            Navigator.push(
+                          onPressed: () async {
+                            final result = await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => CreateStartupPage(),
+                                builder: (_) => CreateStartupPage(),
                               ),
                             );
+                            if (result) {
+                              _futureMyStartups = _getMyStartups();
+                              setState(() {});
+                            }
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) => CreateStartupPage(),
+                            //   ),
+                            // );
                           },
                         ),
                       ],

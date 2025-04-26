@@ -8,11 +8,13 @@ class StartupBase(BaseModel):
     image_url: str | None = None
 
 class StartupCreate(BaseModel):
-    pass
+    name: str
+    description: str | None = None
+    goal_amount: int
 
 class StartupResponse(BaseModel):
     id: UUID
-    owner_id: UUID
+    user_id: UUID
     name: str
     description: str | None = None
     goal_amount: int | None = 0
