@@ -116,7 +116,7 @@ class _HomePageState extends State<HomePage> {
                         description: item['description'] ?? 'No description',
                         goalAmount: item['goal_amount'],
                         raisedAmount: item['raised_amount'],
-                        startupId: "",
+                        startupId: item['id'],
                       );
                     } else {
                       return PersonCardWidget(

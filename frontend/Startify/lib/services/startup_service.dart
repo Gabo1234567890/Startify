@@ -46,7 +46,7 @@ class StartupService {
       if (loggedInUser["username"] != "") {
         data =
             data
-                .where((startup) => startup['owner_id'] != loggedInUser['id'])
+                .where((startup) => startup['user_id'] != loggedInUser['id'])
                 .toList();
       }
       return data.cast<Map<String, dynamic>>();
