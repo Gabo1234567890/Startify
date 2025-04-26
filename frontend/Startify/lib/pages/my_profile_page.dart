@@ -33,6 +33,10 @@ class MyProfilePageState extends State<MyProfilePage> {
           );
         });
       }
+      bioController = TextEditingController(text: userData["bio"] ?? "");
+      bioController.selection = TextSelection.fromPosition(
+        TextPosition(offset: bioController.text.length),
+      );
     } catch (e) {
       print("Error fetching profile: $e");
     }
@@ -42,10 +46,6 @@ class MyProfilePageState extends State<MyProfilePage> {
   void initState() {
     super.initState();
     _loadUserData();
-    bioController = TextEditingController(text: userData["bio"] ?? "");
-    bioController.selection = TextSelection.fromPosition(
-      TextPosition(offset: bioController.text.length),
-    );
   }
 
   @override
