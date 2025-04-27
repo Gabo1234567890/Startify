@@ -37,7 +37,7 @@ class IdeaCardWidget extends StatelessWidget {
                     builder: (context) {
                       return myIdea
                           ? MyStartupPage(startupId: startupId)
-                          : NotMyStartupPage();
+                          : NotMyStartupPage(startupId: startupId);
                     },
                   ),
                 );
