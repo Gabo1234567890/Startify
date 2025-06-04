@@ -14,7 +14,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build Docker Compose services
-      run: docker-compose up -d --build
+      run: docker compose up -d --build
     - name: Run tests
       run: |
         # Тук добави команди за автоматични тестове, примерно pytest или други
