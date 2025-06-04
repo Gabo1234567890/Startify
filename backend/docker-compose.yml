@@ -22,6 +22,7 @@ services:
   api:
     build: .
     container_name: startify_api
+    restart: always
     ports:
       - "8000:8000"
     depends_on:
