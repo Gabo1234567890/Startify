@@ -1,18 +1,21 @@
-name: Docker Image CI
+# .github/workflows/docker-build.yml
+name: Build and Test
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ main ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ main ]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+    - uses: actions/checkout@v3
+    - name: Build Docker Compose services
+      run: docker-compose up -d --build
+    - name: Run tests
+      run: |
+        # Тук добави команди за автоматични тестове, примерно pytest или други
+        echo "Тестовете трябва да се добавят тук"
