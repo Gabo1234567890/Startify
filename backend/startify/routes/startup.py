@@ -53,3 +53,12 @@ def get_startup(startup_id: UUID, db: Session = Depends(get_db)):
     if not startup:
         raise HTTPException(status_code=404, detail="Startup not found")
     return startup
+
+@router.delete("/startups/{startup_id}")
+def delete_startup(startup_id: UUID, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    startup = db.query(Startup).filter(Startup.id == startup_id, Startup.user_id == current_user.id).first()
+    if not startup:
+        raise HTTPException(status_code=404, detail="Startup not found")
+    db.delete(startup)
+    db.commit()
+    return {"message": "Startup deleted successfully"}
