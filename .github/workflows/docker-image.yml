@@ -1,0 +1,22 @@
+# .github/workflows/docker-build.yml
+name: Build and Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build Docker Compose services
+      working-directory: ./backend
+      run: docker compose up -d --build
+    - name: Run tests
+      run: |
+        # Тук добави команди за автоматични тестове, примерно pytest или други
+        echo "Тестовете трябва да се добавят тук"
