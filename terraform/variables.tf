@@ -20,5 +20,5 @@ variable "db_password" {
 
 variable "db_name" {
   description = "Database name"
-  default     = "startify_db"
+  default     = "startify_dbase"
 }

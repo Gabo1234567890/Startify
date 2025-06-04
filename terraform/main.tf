@@ -28,12 +28,12 @@ resource "docker_image" "postgres" {
 }
 
 resource "docker_container" "postgres" {
-  name  = "startify_db"
+  name  = "startify_dbase"
   image = docker_image.postgres.image_id
   env = [
     "POSTGRES_USER=startify_user",
     "POSTGRES_PASSWORD=startify_pass",
-    "POSTGRES_DB=startify_db"
+    "POSTGRES_DB=startify_dbase"
   ]
   networks_advanced {
     name = docker_network.app_network.name
@@ -62,7 +62,7 @@ resource "docker_container" "app" {
   name  = "startify_api"
   image = docker_image.app.image_id
   env = [
-    "DATABASE_URL=postgresql://startify_user:startify_pass@startify_db:5432/startify_db"
+    "DATABASE_URL=postgresql://startify_user:startify_pass@startify_dbase:5432/startify_dbase"
   ]
   networks_advanced {
     name = docker_network.app_network.name
