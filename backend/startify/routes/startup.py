@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends, Query, HTTPException
 from sqlalchemy.orm import Session
-from startify.database.connection import get_db
-from startify.models.user import User
-from startify.models.startup import Startup
-from startify.schemas.startup import StartupResponse, StartupCreate
-from startify.utils.security import get_current_user
+from ..database.connection import get_db
+from ..models.user import User
+from ..models.startup import Startup
+from ..schemas.startup import StartupResponse, StartupCreate
+from ..utils.security import get_current_user
 from uuid import UUID
 
 router = APIRouter()

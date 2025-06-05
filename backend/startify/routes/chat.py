@@ -1,13 +1,13 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session, aliased
-from startify.database.connection import get_db
-from startify.models.user import User
-from startify.models.chat import Chat
-from startify.models.message import Message
-from startify.schemas.chat import ChatResponse, CreateChatRequest
-from startify.schemas.message import MessageCreate
-from startify.schemas.message import MessageResponse
-from startify.utils.security import get_current_user
+from ..database.connection import get_db
+from ..models.user import User
+from ..models.chat import Chat
+from ..models.message import Message
+from ..schemas.chat import ChatResponse, CreateChatRequest
+from ..schemas.message import MessageCreate
+from ..schemas.message import MessageResponse
+from ..utils.security import get_current_user
 from uuid import UUID
 
 router = APIRouter()

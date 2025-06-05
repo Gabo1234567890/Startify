@@ -1,7 +1,7 @@
 from sqlalchemy import Column, String
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
-from startify.database.connection import Base
+from ..database.connection import Base
 import uuid
 
 class User(Base):

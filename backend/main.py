@@ -1,10 +1,9 @@
-
 from fastapi import FastAPI
-from startify.database.connection import engine, Base
-from startify.routes import auth
-from startify.routes import startup
-from startify.routes import user
-from startify.routes import chat
+from .startify.database.connection import engine, Base
+from .startify.routes import auth
+from .startify.routes import startup
+from .startify.routes import user
+from .startify.routes import chat
 
 Base.metadata.create_all(bind=engine)
 

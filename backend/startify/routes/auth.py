@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from startify.schemas.user import UserCreate, UserLogin, UserResponse, LoginResponse
-from startify.models.user import User
-from startify.utils.security import hash_password, verify_password, create_access_token
-from startify.database.connection import get_db
+from ..schemas.user import UserCreate, UserLogin, UserResponse, LoginResponse
+from ..models.user import User
+from ..utils.security import hash_password, verify_password, create_access_token
+from ..database.connection import get_db
 
 router = APIRouter()
 

@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
-from startify.schemas.user import UserProfile, ProfileUpdate, UserOut
-from startify.models.user import User
-from startify.utils.security import get_current_user
-from startify.database.connection import get_db
+from ..schemas.user import UserProfile, ProfileUpdate, UserOut
+from ..models.user import User
+from ..utils.security import get_current_user
+from ..database.connection import get_db
 
 router = APIRouter()
 
