@@ -15,7 +15,7 @@ class StartupService {
     }
 
     final response = await http.get(
-      Uri.parse('$baseUrl/startups/my?search=$search'),
+      Uri.parse('$baseUrl/api/startups/my?search=$search'),
       headers: {
         "Authorization": "Bearer $token",
         "Content-Type": "application/json",
@@ -36,7 +36,7 @@ class StartupService {
     String search = "",
   }) async {
     final url = Uri.parse(
-      "$baseUrl/startups?skip=$skip&limit=$limit&search=$search",
+      "$baseUrl/api/startups?skip=$skip&limit=$limit&search=$search",
     );
     final response = await http.get(url);
 
@@ -67,7 +67,7 @@ class StartupService {
     }
 
     final response = await http.post(
-      Uri.parse('$baseUrl/startups'),
+      Uri.parse('$baseUrl/api/startups'),
       headers: {
         "Authorization": "Bearer $token",
         "Content-Type": "application/json",
@@ -85,7 +85,9 @@ class StartupService {
   }
 
   Future<Map<String, dynamic>> getStartup({required String startupId}) async {
-    final response = await http.get(Uri.parse("$baseUrl/startups/$startupId"));
+    final response = await http.get(
+      Uri.parse("$baseUrl/api/startups/$startupId"),
+    );
 
     if (response.statusCode == 200) {
       return jsonDecode(response.body);

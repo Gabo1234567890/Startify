@@ -17,7 +17,7 @@ class AuthService {
     String email,
     String password,
   ) async {
-    final url = Uri.parse("$baseUrl/register");
+    final url = Uri.parse("$baseUrl/api/auth/register");
 
     final response = await http.post(
       url,
@@ -38,7 +38,7 @@ class AuthService {
   }
 
   Future<Map<String, dynamic>> login(String email, String password) async {
-    final url = Uri.parse("$baseUrl/login");
+    final url = Uri.parse("$baseUrl/api/auth/login");
 
     final response = await http.post(
       url,
@@ -63,7 +63,7 @@ class AuthService {
       return {"username": "", "email": "", "bio": ""};
     }
     final response = await http.get(
-      Uri.parse("$baseUrl/me"),
+      Uri.parse("$baseUrl/api/users/me"),
       headers: {
         "Authorization": "Bearer $token",
         "Content-Type": "application/json",
@@ -80,7 +80,7 @@ class AuthService {
   Future<void> updateProfile({required String bio}) async {
     final token = await storage.read(key: "access_token");
     final response = await http.put(
-      Uri.parse("$baseUrl/me"),
+      Uri.parse("$baseUrl/api/users/me"),
       headers: {
         "Authorization": "Bearer $token",
         "Content-Type": "application/json",
@@ -100,7 +100,7 @@ class AuthService {
     bool withCurrent = false,
   }) async {
     final url = Uri.parse(
-      "$baseUrl/users?skip=$skip&limit=$limit&search=$search",
+      "$baseUrl/api/users?skip=$skip&limit=$limit&search=$search",
     );
     final response = await http.get(url);
 

@@ -13,7 +13,7 @@ class ChatService {
   Future<List<Map<String, dynamic>>> getChats({String search = ""}) async {
     final token = await _getToken();
     final response = await http.get(
-      Uri.parse("$baseUrl/chats?search=$search"),
+      Uri.parse("$baseUrl/api/chats?search=$search"),
       headers: {"Authorization": "Bearer $token"},
     );
 
@@ -28,7 +28,7 @@ class ChatService {
   Future<Map<String, dynamic>> createChat(String userId) async {
     final token = await _getToken();
     final response = await http.post(
-      Uri.parse("$baseUrl/chats"),
+      Uri.parse("$baseUrl/api/chats"),
       headers: {
         "Authorization": "Bearer $token",
         "Content-Type": "application/json",
@@ -46,7 +46,7 @@ class ChatService {
   Future<List<Map<String, dynamic>>> getMessages(String chatId) async {
     final token = await _getToken();
     final response = await http.get(
-      Uri.parse("$baseUrl/chats/$chatId/messages"),
+      Uri.parse("$baseUrl/api/chats/$chatId/messages"),
       headers: {"Authorization": "Bearer $token"},
     );
 
@@ -64,7 +64,7 @@ class ChatService {
   ) async {
     final token = await _getToken();
     final response = await http.post(
-      Uri.parse("$baseUrl/chats/$chatId/messages"),
+      Uri.parse("$baseUrl/api/chats/$chatId/messages"),
       headers: {
         "Authorization": "Bearer $token",
         "Content-Type": "application/json",

@@ -12,7 +12,7 @@ from uuid import UUID
 
 router = APIRouter()
 
-@router.get("/chats", response_model=list[ChatResponse])
+@router.get("", response_model=list[ChatResponse])
 def get_user_chats(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
@@ -24,7 +24,7 @@ def get_user_chats(
         query = query.filter(user1.username.ilike(f"%{search}%"))
     return query.all()
 
-@router.post("/chats", response_model=ChatResponse)
+@router.post("", response_model=ChatResponse)
 def create_chat(request: CreateChatRequest, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     existing_chat = (
         db.query(Chat)
@@ -41,11 +41,11 @@ def create_chat(request: CreateChatRequest, db: Session = Depends(get_db), curre
     db.refresh(new_chat)
     return new_chat
 
-@router.get("/chats/{chat_id}/messages", response_model=list[MessageResponse])
+@router.get("/{chat_id}/messages", response_model=list[MessageResponse])
 def get_chat_messages(chat_id: UUID, db: Session = Depends(get_db)):
     return db.query(Message).filter(Message.chat_id == chat_id).order_by(Message.timestamp.desc()).all()
 
-@router.post("/chats/{chat_id}/messages", response_model=MessageResponse)
+@router.post("/{chat_id}/messages", response_model=MessageResponse)
 def send_messages(chat_id: UUID, message: MessageCreate, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     chat = db.query(Chat).filter(Chat.id == chat_id).first()
     if not chat:
