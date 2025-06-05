@@ -9,7 +9,7 @@ from uuid import UUID
 
 router = APIRouter()
 
-@router.get("/startups/my", response_model=list[StartupResponse])
+@router.get("/my", response_model=list[StartupResponse])
 def get_my_startups(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
@@ -20,7 +20,7 @@ def get_my_startups(
         query = query.filter(Startup.name.ilike(f"%{search}%"))
     return query.all()
 
-@router.get("/startups", response_model=list[StartupResponse])
+@router.get("", response_model=list[StartupResponse])
 def get_startups(
     skip: int = Query(0),
     limit: int = Query(10),
@@ -34,7 +34,7 @@ def get_startups(
     return query.offset(skip).limit(limit).all()
 
 
-@router.post("/startups", response_model=StartupResponse)
+@router.post("", response_model=StartupResponse)
 def create_startup(startup: StartupCreate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     new_startup = Startup(
         user_id=current_user.id,
@@ -47,14 +47,14 @@ def create_startup(startup: StartupCreate, db: Session = Depends(get_db), curren
     db.refresh(new_startup)
     return new_startup
 
-@router.get("/startups/{startup_id}", response_model=StartupResponse)
+@router.get("/{startup_id}", response_model=StartupResponse)
 def get_startup(startup_id: UUID, db: Session = Depends(get_db)):
     startup = db.query(Startup).filter(Startup.id == startup_id).first()
     if not startup:
         raise HTTPException(status_code=404, detail="Startup not found")
     return startup
 
-@router.delete("/startups/{startup_id}")
+@router.delete("/{startup_id}")
 def delete_startup(startup_id: UUID, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     startup = db.query(Startup).filter(Startup.id == startup_id, Startup.user_id == current_user.id).first()
     if not startup:

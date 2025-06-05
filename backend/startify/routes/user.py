@@ -19,7 +19,7 @@ def update_me(update: ProfileUpdate, db: Session = Depends(get_db), current_user
     db.refresh(current_user)
     return current_user
 
-@router.get("/users", response_model=list[UserOut])
+@router.get("", response_model=list[UserOut])
 def get_users(
     skip: int = Query(0),
     limit: int = Query(10),
