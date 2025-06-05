@@ -4,8 +4,8 @@ from passlib.context import CryptContext
 from datetime import datetime, timedelta, timezone
 from jose import jwt, JWTError
 from sqlalchemy.orm import Session
-from startify.database.connection import get_db
-from startify.models.user import User
+from ..database.connection import get_db
+from ..models.user import User
 import os
 
 pwd_context = CryptContext(schemes=["bcrypt"])

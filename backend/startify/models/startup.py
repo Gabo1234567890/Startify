@@ -1,7 +1,7 @@
 from sqlalchemy import Column, String, Integer, ForeignKey, Text, DateTime
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
-from startify.database.connection import Base
+from ..database.connection import Base
 import uuid
 from datetime import datetime, timezone
 
